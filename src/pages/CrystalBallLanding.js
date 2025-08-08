@@ -34,11 +34,15 @@ function parseCsvToPhrases(text) {
       if (line.startsWith('"')) {
         const m = line.match(/^"((?:[^"\\]|\\.)*)"/);
         if (m) {
-          return m[1].replace(/\\"/g, '"').trim();
+          let s = m[1].replace(/\\"/g, '"').trim();
+          if (!s.endsWith('.')) s += '.';
+          return s;
         }
       }
       const first = line.split(',')[0];
-      return first.replace(/^"|"$/g, '').trim();
+      let s = first.replace(/^"|"$/g, '').trim();
+      if (!s.endsWith('.')) s += '.';
+      return s;
     })
     .filter(Boolean);
 }
