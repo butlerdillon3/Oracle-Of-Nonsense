@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+  --bg-1: #0f1230;
+  --bg-2: #080a1c;
+  --ink: #e7f1ff;
+  --ink-dim: #9faed0;
+}
+
+* { box-sizing: border-box; }
+
+.cb-landing {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
+  color: var(--ink);
+  overflow: hidden;
+  font-family: 'Press Start 2P', cursive;
+  display: grid;
+  place-items: center;
+  padding: 48px 16px;
+  image-rendering: pixelated;
+}
+
+.cb-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.cb-stars { position: absolute; inset: 0; opacity: .85; image-rendering: pixelated; background:
+  linear-gradient(#fff, #fff) 8% 16% / 2px 2px no-repeat,
+  linear-gradient(#fff, #fff) 24% 22% / 2px 2px no-repeat,
+  linear-gradient(#fff, #fff) 40% 10% / 2px 2px no-repeat,
+  linear-gradient(#fff, #fff) 60% 18% / 2px 2px no-repeat,
+  linear-gradient(#fff, #fff) 78% 14% / 2px 2px no-repeat,
+  linear-gradient(#fff, #fff) 72% 34% / 2px 2px no-repeat,
+  linear-gradient(#fff, #fff) 14% 52% / 2px 2px no-repeat,
+  linear-gradient(#fff, #fff) 30% 64% / 2px 2px no-repeat,
+  linear-gradient(#fff, #fff) 52% 72% / 2px 2px no-repeat,
+  linear-gradient(#fff, #fff) 86% 70% / 2px 2px no-repeat,
+  /* added ~30% more */
+  linear-gradient(#fff, #fff) 5% 40% / 2px 2px no-repeat,
+  linear-gradient(#fff, #fff) 92% 38% / 2px 2px no-repeat,
+  linear-gradient(#fff, #fff) 48% 26% / 2px 2px no-repeat;
+  animation: cb-twinkle 6s steps(8, end) infinite;
+}
+.cb-scan { position: absolute; inset: 0; opacity: .06; background: repeating-linear-gradient(0deg, rgba(255,255,255,.5) 0 2px, transparent 2px 4px); }
+
+.cb-scene { position: relative; z-index: 1; display: grid; place-items: center; gap: 20px; text-align: center; }
+.cb-ball { width: clamp(160px, 30vw, 260px); height: auto; filter: drop-shadow(2px 2px 0 #000) drop-shadow(0 0 18px rgba(255,255,255,.25)); cursor: pointer; transition: transform .25s ease; background-color: transparent; image-rendering: auto; }
+.cb-ball:hover { transform: translateY(-2px) scale(1.02); }
+
+/* attention shake */
+.shake { animation: cb-shake .7s steps(12, end); }
+@keyframes cb-shake {
+  0%,100% { transform: translateY(0) rotate(0deg); }
+  20% { transform: translate(-2px, 0) rotate(-2deg); }
+  40% { transform: translate(2px, 0) rotate(2deg); }
+  60% { transform: translate(-2px, 0) rotate(-2deg); }
+  80% { transform: translate(2px, 0) rotate(2deg); }
+}
+
+.cb-phrase { font-size: clamp(12px, 2.6vw, 18px); color: var(--ink); text-shadow: 2px 2px 0 #000; opacity: 0; transform: translateY(6px); transition: opacity .35s steps(8, end), transform .35s steps(8, end); max-width: 720px; padding: 0 8px; }
+.cb-phrase.show { opacity: 1; transform: translateY(0); }
+
+.cb-tagline { font-size: clamp(10px, 2.2vw, 14px); color: var(--ink-dim); opacity: 0; transform: translateY(8px); transition: opacity .5s steps(10, end) .2s, transform .5s steps(10, end) .2s; }
+.cb-tagline.show { opacity: 1; transform: translateY(0); }
+
+@keyframes cb-twinkle { 50% { filter: brightness(1.4); } }
+
+.cb-shooting-stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.shooting-star {
+  position: absolute;
+  width: 8px;
+  height: 2px;
+  background: hsl(var(--hue, 200), 100%, 80%);
+  box-shadow: 0 0 8px hsla(var(--hue, 200), 100%, 70%, .9), 2px 2px 0 #000;
+  transform: translate(0, 0) rotate(var(--rot, 0deg));
+  animation: fly var(--dur, 1200ms) linear forwards;
+  image-rendering: pixelated;
+}
+
+@keyframes fly {
+  to {
+    transform: translate(var(--dx, 600px), var(--dy, 0px)) rotate(var(--rot, 0deg));
+    opacity: 0;
+  }
+}
+
+.cb-static-stars { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.static-star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #fff;
+  image-rendering: pixelated;
+  animation: cb-twinkle 6s steps(8, end) infinite;
+}
