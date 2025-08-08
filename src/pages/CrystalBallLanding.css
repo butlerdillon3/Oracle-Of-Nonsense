@@ -83,6 +83,25 @@
   }
 }
 
+.cb-moving-phrases { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.moving-phrase {
+  position: absolute;
+  font-size: clamp(8px, 1.5vw, 12px);
+  color: var(--ink-dim);
+  text-shadow: 2px 2px 0 #000;
+  transform: translate(0, 0) rotate(var(--rot, 0deg));
+  animation: fly-phrase var(--dur, 4000ms) linear forwards;
+  image-rendering: pixelated;
+  white-space: nowrap;
+}
+
+@keyframes fly-phrase {
+  to {
+    transform: translate(var(--dx, 600px), var(--dy, 0px)) rotate(var(--rot, 0deg));
+    opacity: 0;
+  }
+}
+
 .cb-static-stars { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 .static-star {
   position: absolute;
