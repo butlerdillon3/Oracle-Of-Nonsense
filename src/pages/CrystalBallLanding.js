@@ -204,7 +204,7 @@ const CrystalBallLanding = () => {
         // Always at least one
         spawnStar();
         // Chance for a second simultaneous star
-        if (Math.random() < 0.25) {
+        if (Math.random() < 0.15) {
           spawnStar();
         }
         scheduleNextStar();
