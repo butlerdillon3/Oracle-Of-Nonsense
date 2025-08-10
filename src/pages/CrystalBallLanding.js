@@ -55,6 +55,7 @@ const CrystalBallLanding = () => {
   const [showTagline, setShowTagline] = useState(false);
   const [attentionShake, setAttentionShake] = useState(false);
   const [isInteracting, setIsInteracting] = useState(false);
+  const [isClickable, setIsClickable] = useState(true);
 
   const [stars, setStars] = useState([]); // shooting stars
   const [staticStars, setStaticStars] = useState([]); // randomized background stars
@@ -81,6 +82,26 @@ const CrystalBallLanding = () => {
     clearTimeout(revealTimerRef.current);
     setShowTagline(false);
     setShowPhrase(false);
+  };
+
+  const handleClick = () => {
+    if (!isClickable) return; // Prevent rapid clicking
+    
+    // Start 2-second cooldown
+    setIsClickable(false);
+    setTimeout(() => setIsClickable(true), 2000);
+    
+    // Fade out current text (same as mouse leave)
+    setShowTagline(false);
+    setShowPhrase(false);
+    
+    // After fade out, show new phrase (same as mouse enter)
+    setTimeout(() => {
+      setCurrentIndex((prev) => getNextIndex(allPhrases.length, prev));
+      setShowPhrase(true);
+      clearTimeout(revealTimerRef.current);
+      revealTimerRef.current = setTimeout(() => setShowTagline(true), 700);
+    }, 350); // Wait for fade out animation to complete
   };
 
   // Generate randomized static stars on load (~25% more than before -> 16)
@@ -327,6 +348,10 @@ const CrystalBallLanding = () => {
         ))}
       </div>
 
+      <div className="cb-mystical-title">
+        What does the oracle have in store for you?
+      </div>
+
       <section className="cb-scene" aria-label="Crystal ball">
         <img
           src={crystalBallImg}
@@ -334,15 +359,13 @@ const CrystalBallLanding = () => {
           className={`cb-ball ${attentionShake && !isInteracting ? 'shake' : ''}`}
           onMouseEnter={handleEnter}
           onMouseLeave={handleLeave}
-          onFocus={handleEnter}
-          onBlur={handleLeave}
-          tabIndex={0}
+          onClick={handleClick}
         />
 
         <div className={`cb-phrase ${showPhrase ? 'show' : ''}`} role="status" aria-live="polite">
           {allPhrases[currentIndex]}
         </div>
-        <div className={`cb-tagline ${showTagline ? 'show' : ''}`}>and im always saying that</div>
+        <div className={`cb-tagline ${showTagline ? 'show' : ''}`}>and I'm always saying that...</div>
       </section>
     </main>
   );
