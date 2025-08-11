@@ -1,56 +1,50 @@
-/* global require */
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './CrystalBallLanding.css';
 import crystalBallImg from '../pictures/Crystal-Ball-PNG-Cutout.png';
+import PHRASE_TEMPLATES from '../templates/Templates.js';
 
-function getNextIndex(max, exclude) {
-  if (max <= 1) return 0;
-  let idx = Math.floor(Math.random() * max);
-  if (idx === exclude) idx = (idx + 1) % max;
-  return idx;
+
+function generatePhraseFromTemplate() {
+  const template = PHRASE_TEMPLATES[Math.floor(Math.random() * PHRASE_TEMPLATES.length)];
+  let phrase = template.structure;
+
+  // Replace placeholders with random words from their respective arrays
+  if (template.nouns) {
+    phrase = phrase.replace(/\{noun\}/g, () => template.nouns[Math.floor(Math.random() * template.nouns.length)]);
+  }
+  if (template.verbs) {
+    phrase = phrase.replace(/\{verb\}/g, () => template.verbs[Math.floor(Math.random() * template.verbs.length)]);
+  }
+  if (template.nouns2) {
+    phrase = phrase.replace(/\{noun2\}/g, () => template.nouns2[Math.floor(Math.random() * template.nouns2.length)]);
+  }
+  if (template.verbs2) {
+    phrase = phrase.replace(/\{verb2\}/g, () => template.verbs2[Math.floor(Math.random() * template.verbs2.length)]);
+  }
+  if (template.nouns3) {
+    phrase = phrase.replace(/\{noun3\}/g, () => template.nouns3[Math.floor(Math.random() * template.nouns3.length)]);
+  }
+  if (template.nouns4) {
+    phrase = phrase.replace(/\{noun4\}/g, () => template.nouns4[Math.floor(Math.random() * template.nouns4.length)]);
+  }
+  if (template.adjectives) {
+    phrase = phrase.replace(/\{adjective\}/g, () => template.adjectives[Math.floor(Math.random() * template.adjectives.length)]);
+  }
+  if (template.adjectives2) {
+    phrase = phrase.replace(/\{adjective2\}/g, () => template.adjectives2[Math.floor(Math.random() * template.adjectives2.length)]);
+  }
+
+  // Capitalize the first letter of the phrase and add a period
+  return phrase.charAt(0).toUpperCase() + phrase.slice(1) + '.';
 }
 
-const DEFAULT_FALLBACK_PHRASES = [
-  'the veil thins, truth glimmers',
-  'you already know the answer',
-  'listen for the softest yes',
-  'intention tunes the frequency',
-  'destiny speaks between thoughts',
-  'your timing is a constellation',
-  'the next step arrives on a whisper',
-  'clarity shimmers at the edges',
-  'fortune hums in quiet moments',
-  'exhale—the path appears',
-];
 
-function parseCsvToPhrases(text) {
-  if (!text) return [];
-  return text
-    .split(/\r?\n/)
-    .map((line) => line.trim())
-    .filter((line) => line.length > 0 && !line.startsWith('#'))
-    .map((line) => {
-      // Very small CSV heuristic: use first column; support simple quoted value
-      if (line.startsWith('"')) {
-        const m = line.match(/^"((?:[^"\\]|\\.)*)"/);
-        if (m) {
-          let s = m[1].replace(/\\"/g, '"').trim();
-          if (!s.endsWith('.')) s += '.';
-          return s;
-        }
-      }
-      const first = line.split(',')[0];
-      let s = first.replace(/^"|"$/g, '').trim();
-      if (!s.endsWith('.')) s += '.';
-      return s;
-    })
-    .filter(Boolean);
-}
 
 const CrystalBallLanding = () => {
-  const [allPhrases, setAllPhrases] = useState(DEFAULT_FALLBACK_PHRASES);
+  const [CSV_PHRASES, setCSV_PHRASES] = useState(['The oracle is silent today.']);
+  const [currentPhrase, setCurrentPhrase] = useState('');
+  const [chaosMode, setChaosMode] = useState(false);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [showPhrase, setShowPhrase] = useState(false);
   const [showTagline, setShowTagline] = useState(false);
   const [attentionShake, setAttentionShake] = useState(false);
@@ -69,9 +63,13 @@ const CrystalBallLanding = () => {
   const phraseScheduleRef = useRef(null);
   const phraseRemovalRefs = useRef(new Map());
 
+  const generatePhrase = React.useCallback(() => {
+    return chaosMode ? generatePhraseFromTemplate() : generatePhraseFromCSV();
+  }, [chaosMode, CSV_PHRASES]);
+
   const handleEnter = () => {
     setIsInteracting(true);
-    setCurrentIndex((prev) => getNextIndex(allPhrases.length, prev));
+    setCurrentPhrase(generatePhrase());
     setShowPhrase(true);
     clearTimeout(revealTimerRef.current);
     revealTimerRef.current = setTimeout(() => setShowTagline(true), 700);
@@ -97,11 +95,20 @@ const CrystalBallLanding = () => {
     
     // After fade out, show new phrase (same as mouse enter)
     setTimeout(() => {
-      setCurrentIndex((prev) => getNextIndex(allPhrases.length, prev));
+      setCurrentPhrase(generatePhrase());
       setShowPhrase(true);
       clearTimeout(revealTimerRef.current);
       revealTimerRef.current = setTimeout(() => setShowTagline(true), 700);
     }, 350); // Wait for fade out animation to complete
+  };
+
+  const toggleChaosMode = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // Simply toggle the mode without changing any other state
+    // This prevents any layout shifts or movements
+    setChaosMode(prev => !prev);
   };
 
   // Generate randomized static stars on load (~25% more than before -> 16)
@@ -146,6 +153,44 @@ const CrystalBallLanding = () => {
     };
   }, []);
 
+  // Generate initial phrase after CSV data is loaded
+  useEffect(() => {
+    if (CSV_PHRASES.length > 0) {
+      setCurrentPhrase(generatePhrase());
+    }
+  }, [CSV_PHRASES, generatePhrase]);
+
+  function generatePhraseFromCSV() {
+    const randomPhrase = CSV_PHRASES[Math.floor(Math.random() * CSV_PHRASES.length)];
+    let phrase = randomPhrase.charAt(0).toUpperCase() + randomPhrase.slice(1);
+    if (!phrase.endsWith('.')) {
+      phrase += '.';
+    }
+    return phrase;
+  }
+
+  function parseCsvToPhrases(text) {
+    if (!text) return [];
+    return text
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0 && !line.startsWith('#'))
+      .map((line) => {
+        // Very small CSV heuristic: use first column; support simple quoted value
+        if (line.startsWith('"')) {
+          const m = line.match(/^"((?:[^"\\]|\\.)*)"/);
+          if (m) {
+            let s = m[1].replace(/\\"/g, '"').trim();
+            return s;
+          }
+        }
+        const first = line.split(',')[0];
+        let s = first.replace(/^"|"$/g, '').trim();
+        return s;
+      })
+      .filter(Boolean);
+  }  
+
   // Load phrases from CSV files in src/phrases at build-time (fetched at runtime)
   useEffect(() => {
     let isCancelled = false;
@@ -175,7 +220,7 @@ const CrystalBallLanding = () => {
         const parsed = texts.flatMap((t) => parseCsvToPhrases(t));
         const unique = Array.from(new Set(parsed.map((s) => s.trim()))).filter(Boolean);
         if (!isCancelled && unique.length > 0) {
-          setAllPhrases(unique);
+          setCSV_PHRASES(unique);
         }
       } catch (_) {
         // ignore and keep fallback
@@ -352,6 +397,15 @@ const CrystalBallLanding = () => {
         What does the oracle have in store for you?
       </div>
 
+      {/* Chaos Mode Button */}
+      <button 
+        className={`chaos-mode-btn ${chaosMode ? 'active' : ''}`}
+        onClick={toggleChaosMode}
+        aria-label={`Chaos Mode ${chaosMode ? 'enabled' : 'disabled'}`}
+      >
+        {chaosMode ? '🌪️ Chaos Mode ON' : '✨ Normal Mode'}
+      </button>
+
       <section className="cb-scene" aria-label="Crystal ball">
         <img
           src={crystalBallImg}
@@ -363,7 +417,7 @@ const CrystalBallLanding = () => {
         />
 
         <div className={`cb-phrase ${showPhrase ? 'show' : ''}`} role="status" aria-live="polite">
-          {allPhrases[currentIndex]}
+          {currentPhrase}
         </div>
         <div className={`cb-tagline ${showTagline ? 'show' : ''}`}>and I'm always saying that...</div>
       </section>
