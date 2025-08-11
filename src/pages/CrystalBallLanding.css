@@ -130,20 +130,24 @@
 
 @keyframes mystical-wave {
   0%, 100% {
-    transform: translateY(0px) rotate(-1deg);
+    transform: rotate(0deg);
     filter: brightness(1) hue-rotate(0deg);
   }
-  25% {
-    transform: translateY(-3px) rotate(1deg);
+  15% {
+    transform: rotate(-1.2deg);
     filter: brightness(1.1) hue-rotate(5deg);
   }
-  50% {
-    transform: translateY(0px) rotate(0deg);
+  30% {
+    transform: rotate(1.2deg);
     filter: brightness(1.2) hue-rotate(10deg);
   }
-  75% {
-    transform: translateY(-2px) rotate(-0.5deg);
+  50% {
+    transform: rotate(-0.6deg);
     filter: brightness(1.1) hue-rotate(5deg);
+  }
+  70% {
+    transform: rotate(0.3deg);
+    filter: brightness(1.05) hue-rotate(2deg);
   }
 }
 
