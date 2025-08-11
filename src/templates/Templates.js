@@ -1,10 +1,10 @@
 const PHRASE_TEMPLATES = [
     {
-      structure: 'the {noun} {verb}, {noun2} {verb2}',
-      nouns: ['veil', 'moon', 'wind', 'river', 'star', 'shadow', 'light', 'dream', 'silence', 'whisper', 'echo', 'mirror', 'gate', 'bridge', 'path', 'door', 'window', 'curtain', 'fog', 'mist', 'cloud', 'storm', 'thunder', 'lightning', 'rain', 'snow', 'frost', 'dew', 'dawn', 'dusk', 'twilight', 'sunrise', 'sunset', 'midnight', 'noon', 'hour', 'minute', 'second', 'moment', 'instant', 'eternity', 'infinity', 'crystal', 'gemstone', 'pearl', 'diamond', 'emerald', 'sapphire', 'ruby', 'opal', 'amethyst', 'topaz', 'obsidian', 'jade', 'turquoise', 'lapis', 'onyx', 'garnet', 'agate', 'carnelian', 'chrysoprase', 'moonstone', 'sunstone', 'bloodstone', 'tiger\'s eye', 'cat\'s eye', 'hawk\'s eye', 'falcon\'s eye', 'eagle\'s eye', 'wolf\'s eye', 'dragon\'s eye', 'phoenix\'s eye', 'unicorn\'s horn', 'dragon\'s scale', 'phoenix\'s feather', 'unicorn\'s mane', 'dragon\'s breath', 'phoenix\'s song', 'unicorn\'s tear', 'dragon\'s heart', 'phoenix\'s soul', 'unicorn\'s spirit'],
-      verbs: ['thins', 'speaks', 'dances', 'flows', 'shimmers', 'whispers', 'glows', 'breathes', 'moves', 'shifts', 'changes', 'reveals', 'hides', 'opens', 'closes', 'rises', 'falls', 'turns', 'spins', 'flows', 'swirls', 'twirls', 'waltzes', 'leaps', 'bounds', 'springs', 'jumps', 'floats', 'drifts', 'wanders', 'roams', 'travels', 'journeys', 'explores', 'discovers', 'creates', 'destroys', 'builds', 'breaks', 'heals', 'wounds', 'blesses', 'curses', 'illuminates', 'darkens', 'transforms', 'manifests', 'materializes', 'dissolves', 'condenses', 'evaporates', 'pulses', 'beats', 'throbs', 'quivers', 'trembles', 'shakes', 'vibrates', 'resonates', 'echoes', 'reverberates', 'amplifies', 'diminishes', 'expands', 'contracts', 'ascends', 'descends', 'emerges', 'submerges', 'radiates', 'emanates', 'pulsates', 'oscillates', 'undulates', 'ripples', 'cascades', 'tumbles', 'spirals', 'orbits', 'waxes', 'wanes', 'crescents', 'gibbous', 'full', 'new', 'waning', 'waxing'],
-      nouns2: ['truth', 'wisdom', 'destiny', 'fortune', 'clarity', 'peace', 'hope', 'love', 'courage', 'strength', 'beauty', 'grace', 'power', 'magic', 'mystery', 'serenity', 'harmony', 'balance', 'freedom', 'joy', 'sorrow', 'pain', 'pleasure', 'ecstasy', 'agony', 'bliss', 'misery', 'enlightenment', 'ignorance', 'knowledge', 'understanding', 'insight', 'foresight', 'hindsight', 'foresight', 'memory', 'forgetting', 'learning', 'teaching', 'growing', 'aging', 'dying', 'living', 'compassion', 'empathy', 'kindness', 'generosity', 'humility', 'patience', 'perseverance', 'resilience', 'adaptability', 'creativity'],
-      verbs2: ['glimmers', 'shines', 'flows', 'dances', 'speaks', 'whispers', 'glows', 'breathes', 'moves', 'shifts', 'changes', 'reveals', 'hides', 'opens', 'closes', 'rises', 'falls', 'turns', 'spins', 'flows', 'sparkles', 'twinkles', 'flickers', 'pulses', 'beats', 'throbs', 'quivers', 'trembles', 'shakes', 'vibrates', 'resonates', 'echoes', 'reverberates', 'amplifies', 'diminishes', 'grows', 'shrinks', 'expands', 'contracts', 'ascends', 'descends', 'emerges', 'submerges', 'radiates', 'emanates', 'pulsates', 'oscillates', 'undulates', 'ripples', 'cascades', 'tumbles', 'spirals', 'orbits']
+        structure: 'the {noun} {verb}, {noun2} {verb2}',
+        nouns: ['veil', 'moon', 'wind', 'river', 'star', 'shadow', 'light', 'dream', 'silence', 'whisper', 'echo', 'mirror', 'gate', 'bridge', 'path', 'door', 'window', 'curtain', 'fog', 'mist', 'cloud', 'storm', 'thunder', 'lightning', 'rain', 'snow', 'frost', 'dew', 'dawn', 'dusk', 'twilight', 'sunrise', 'sunset', 'midnight', 'noon', 'hour', 'minute', 'second', 'moment', 'instant', 'eternity', 'infinity', 'crystal', 'gemstone', 'pearl', 'diamond', 'emerald', 'sapphire', 'ruby', 'opal', 'amethyst', 'topaz', 'obsidian', 'jade', 'turquoise', 'lapis', 'onyx', 'garnet', 'agate', 'carnelian', 'chrysoprase', 'moonstone', 'sunstone', 'bloodstone', 'tiger\'s eye', 'cat\'s eye', 'hawk\'s eye', 'falcon\'s eye', 'eagle\'s eye', 'wolf\'s eye', 'dragon\'s eye', 'phoenix\'s eye', 'unicorn\'s horn', 'dragon\'s scale', 'phoenix\'s feather', 'unicorn\'s mane', 'dragon\'s breath', 'phoenix\'s song', 'unicorn\'s tear', 'dragon\'s heart', 'phoenix\'s soul', 'unicorn\'s spirit'],
+        verbs: ['thins', 'speaks', 'dances', 'flows', 'shimmers', 'whispers', 'glows', 'breathes', 'moves', 'shifts', 'changes', 'reveals', 'hides', 'opens', 'closes', 'rises', 'falls', 'turns', 'spins', 'swirls', 'twirls', 'waltzes', 'leaps', 'bounds', 'springs', 'jumps', 'floats', 'drifts', 'wanders', 'roams', 'travels', 'journeys', 'explores', 'discovers', 'creates', 'destroys', 'builds', 'breaks', 'heals', 'wounds', 'blesses', 'curses', 'illuminates', 'darkens', 'transforms', 'manifests', 'materializes', 'dissolves', 'condenses', 'evaporates', 'pulses', 'beats', 'quivers', 'trembles', 'shakes', 'vibrates', 'resonates', 'echoes', 'reverberates', 'amplifies', 'diminishes', 'expands', 'contracts', 'ascends', 'descends', 'emerges', 'submerges', 'radiates', 'emanates', 'pulsates', 'oscillates', 'undulates', 'ripples', 'cascades', 'tumbles', 'spirals', 'orbits', 'waxes', 'wanes'],
+        nouns2: ['truth', 'wisdom', 'destiny', 'fortune', 'clarity', 'peace', 'hope', 'love', 'courage', 'strength', 'beauty', 'grace', 'power', 'magic', 'mystery', 'serenity', 'harmony', 'balance', 'freedom', 'joy', 'sorrow', 'pain', 'pleasure', 'ecstasy', 'agony', 'bliss', 'misery', 'enlightenment', 'ignorance', 'knowledge', 'understanding', 'insight', 'foresight', 'hindsight', 'memory', 'forgetting', 'learning', 'teaching', 'growth', 'aging', 'dying', 'living', 'compassion', 'empathy', 'kindness', 'generosity', 'humility', 'patience', 'perseverance', 'resilience', 'adaptability', 'creativity'],
+        verbs2: ['glimmers', 'shines', 'flows', 'dances', 'speaks', 'whispers', 'glows', 'breathes', 'moves', 'shifts', 'changes', 'reveals', 'hides', 'opens', 'closes', 'rises', 'falls', 'turns', 'spins', 'sparkles', 'twinkles', 'flickers', 'pulses', 'beats', 'quivers', 'trembles', 'shakes', 'vibrates', 'resonates', 'echoes', 'reverberates', 'amplifies', 'diminishes', 'grows', 'shrinks', 'expands', 'contracts', 'ascends', 'descends', 'emerges', 'submerges', 'radiates', 'emanates', 'pulsates', 'oscillates', 'undulates', 'ripples', 'cascades', 'tumbles', 'spirals', 'orbits']
     },
     {
       structure: 'you already {verb} the {noun}',
@@ -52,7 +52,7 @@ const PHRASE_TEMPLATES = [
       nouns2: ['moments', 'times', 'hours', 'days', 'nights', 'seasons', 'years', 'ages', 'cycles', 'rhythms', 'flows', 'streams', 'currents', 'waves', 'pulses', 'beats', 'breaths', 'heartbeats', 'steps', 'moves', 'changes', 'shifts', 'flows', 'rivers', 'streams', 'oceans', 'seas', 'lakes', 'ponds', 'pools', 'springs', 'wells', 'fountains', 'waterfalls', 'rapids', 'whirlpools', 'eddies', 'currents', 'tides', 'waves', 'ripples', 'splashes']
     },
     {
-      structure: '{verb}—the {noun} {verb2}',
+      structure: '{verb} — the {noun} {verb2}',
       verbs: ['exhale', 'inhale', 'breathe', 'relax', 'let go', 'release', 'surrender', 'trust', 'believe', 'hope', 'dream', 'wish', 'pray', 'think', 'feel', 'sense', 'know', 'understand', 'remember', 'forget', 'learn', 'teach', 'grow', 'change', 'evolve', 'transform', 'heal', 'wound', 'bless', 'curse', 'help', 'hinder', 'guide', 'mislead', 'create', 'destroy', 'build', 'break', 'mend', 'split', 'unite', 'divide'],
       nouns: ['path', 'way', 'road', 'journey', 'adventure', 'experience', 'lesson', 'gift', 'blessing', 'treasure', 'jewel', 'pearl', 'diamond', 'gold', 'silver', 'crystal', 'star', 'planet', 'galaxy', 'universe', 'cosmos', 'creation', 'destruction', 'birth', 'death', 'life', 'soul', 'spirit', 'mind', 'heart', 'body', 'flesh', 'bone', 'blood', 'breath', 'thought', 'feeling', 'emotion', 'sense', 'memory', 'vision', 'dream'],
       verbs2: ['appears', 'reveals', 'shows', 'opens', 'unfolds', 'emerges', 'arises', 'comes', 'arrives', 'manifests', 'materializes', 'takes form', 'becomes real', 'comes true', 'happens', 'occurs', 'takes place', 'comes to pass', 'comes to be', 'comes to life', 'dies', 'fades', 'disappears', 'vanishes', 'dissolves', 'evaporates', 'condenses', 'freezes', 'melts', 'boils', 'cools', 'warms', 'heats', 'chills', 'burns', 'freezes', 'thaws', 'grows', 'decays', 'heals', 'wounds', 'blesses']
@@ -229,6 +229,41 @@ const PHRASE_TEMPLATES = [
       nouns: ['wisdom', 'truth', 'light', 'darkness', 'spirit', 'soul', 'heart', 'mind', 'consciousness', 'awareness', 'presence', 'essence', 'energy', 'force', 'power', 'strength', 'courage', 'love', 'hope', 'faith', 'trust', 'belief', 'doubt', 'fear', 'anger', 'hate', 'envy', 'jealousy', 'pride', 'humility', 'gratitude', 'forgiveness', 'mercy', 'justice', 'honesty', 'integrity', 'honor', 'dignity', 'respect', 'admiration', 'appreciation', 'recognition', 'acknowledgment'],
       verbs: ['flows', 'moves', 'travels', 'journeys', 'wanders', 'roams', 'explores', 'discovers', 'penetrates', 'pierces', 'cuts', 'slices', 'divides', 'separates', 'unites', 'connects', 'links', 'binds', 'ties', 'fastens', 'secures', 'releases', 'frees', 'liberates', 'opens', 'closes', 'reveals', 'hides', 'shows', 'conceals', 'illuminates', 'darkens', 'brightens', 'dim', 'sparkles', 'shimmers', 'glows', 'radiates', 'emanates', 'pulsates', 'vibrates', 'resonates', 'echoes', 'reverberates'],
       nouns2: ['veil', 'curtain', 'screen', 'wall', 'barrier', 'boundary', 'limit', 'horizon', 'edge', 'border', 'line', 'divide', 'separation', 'connection', 'bridge', 'gate', 'door', 'window', 'opening', 'passage', 'path', 'road', 'way', 'journey', 'adventure', 'quest', 'mission', 'purpose', 'meaning', 'significance', 'importance', 'value', 'worth', 'beauty', 'ugliness', 'goodness', 'evil', 'reality', 'illusion', 'dream', 'nightmare', 'fantasy', 'fact', 'fiction', 'myth', 'legend', 'story', 'tale', 'narrative']
+    },
+    {
+      structure: 'if {noun} were {adjective}, {noun2} would {verb}',
+      nouns: ['time', 'wind', 'shadow', 'moonlight', 'memory', 'dream', 'river', 'mountain', 'song', 'silence', 'flame', 'ocean'],
+      adjectives: ['a whisper', 'golden', 'endless', 'fragile', 'hidden', 'restless', 'ancient', 'shimmering', 'gentle', 'wild'],
+      nouns2: ['heart', 'soul', 'path', 'sky', 'forest', 'mind', 'sea', 'story', 'petal', 'star'],
+      verbs: ['dance', 'sing', 'vanish', 'linger', 'glow', 'wander', 'rise', 'fall', 'echo', 'bloom']
+    },
+    {
+      structure: 'like {noun}, {noun2} {verb} through {noun3}',
+      nouns: ['rain', 'glass', 'feathers', 'mist', 'flame', 'shadow', 'wind', 'time'],
+      nouns2: ['hope', 'fear', 'light', 'truth', 'joy', 'sorrow', 'memory', 'dream'],
+      verbs: ['slips', 'flows', 'weaves', 'glides', 'wanders', 'drifts', 'shimmers', 'echoes'],
+      nouns3: ['branches', 'corridors', 'waves', 'valleys', 'echoes', 'clouds', 'threads', 'petals']
+    },
+    {
+      structure: 'no {noun} is too {adjective} for {noun2} to {verb}',
+      nouns: ['path', 'river', 'story', 'flame', 'shadow', 'door', 'bridge', 'dream'],
+      adjectives: ['long', 'narrow', 'dark', 'bright', 'fragile', 'wild', 'twisted', 'endless'],
+      nouns2: ['light', 'wind', 'hope', 'song', 'soul', 'memory', 'truth', 'wave'],
+      verbs: ['cross', 'follow', 'chase', 'carry', 'whisper to', 'illuminate', 'guide', 'find']
+    },
+    {
+        structure: 'only when {noun} {verb} will {noun2} {verb2}',
+        nouns: ['the tide', 'the lantern', 'the dawn', 'the veil', 'the heart', 'the shadow'],
+        verbs: ['returns', 'flickers', 'breaks', 'lifts', 'beats', 'shifts'],
+        nouns2: ['truth', 'hope', 'song', 'memory', 'dream', 'story'],
+        verbs2: ['bloom', 'emerge', 'fade', 'shine', 'linger', 'awaken']
+    },
+    {
+        structure: 'beyond the {adjective} {noun}, {noun2} {verb}',
+        adjectives: ['silver', 'forgotten', 'wild', 'hidden', 'shattered', 'bright'],
+        nouns: ['valley', 'horizon', 'shore', 'city', 'path', 'gate'],
+        nouns2: ['stars', 'echoes', 'waves', 'flames', 'dreams', 'clouds'],
+        verbs: ['gather', 'rise', 'fade', 'sing', 'sleep', 'wander']
     }
   ];
 

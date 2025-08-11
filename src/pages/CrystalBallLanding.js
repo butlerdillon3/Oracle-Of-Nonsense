@@ -3,6 +3,7 @@ import './CrystalBallLanding.css';
 import crystalBallImg from '../pictures/Crystal-Ball-PNG-Cutout.png';
 import PHRASE_TEMPLATES from '../templates/Templates.js';
 
+
 function generatePhraseFromTemplate() {
   const template = PHRASE_TEMPLATES[Math.floor(Math.random() * PHRASE_TEMPLATES.length)];
   let phrase = template.structure;
@@ -37,8 +38,12 @@ function generatePhraseFromTemplate() {
   return phrase.charAt(0).toUpperCase() + phrase.slice(1) + '.';
 }
 
+
+
 const CrystalBallLanding = () => {
+  const [CSV_PHRASES, setCSV_PHRASES] = useState(['The oracle is silent today.']);
   const [currentPhrase, setCurrentPhrase] = useState('');
+  const [chaosMode, setChaosMode] = useState(false);
 
   const [showPhrase, setShowPhrase] = useState(false);
   const [showTagline, setShowTagline] = useState(false);
@@ -58,9 +63,13 @@ const CrystalBallLanding = () => {
   const phraseScheduleRef = useRef(null);
   const phraseRemovalRefs = useRef(new Map());
 
+  const generatePhrase = React.useCallback(() => {
+    return chaosMode ? generatePhraseFromTemplate() : generatePhraseFromCSV();
+  }, [chaosMode, CSV_PHRASES]);
+
   const handleEnter = () => {
     setIsInteracting(true);
-    setCurrentPhrase(generatePhraseFromTemplate());
+    setCurrentPhrase(generatePhrase());
     setShowPhrase(true);
     clearTimeout(revealTimerRef.current);
     revealTimerRef.current = setTimeout(() => setShowTagline(true), 700);
@@ -86,11 +95,20 @@ const CrystalBallLanding = () => {
     
     // After fade out, show new phrase (same as mouse enter)
     setTimeout(() => {
-      setCurrentPhrase(generatePhraseFromTemplate());
+      setCurrentPhrase(generatePhrase());
       setShowPhrase(true);
       clearTimeout(revealTimerRef.current);
       revealTimerRef.current = setTimeout(() => setShowTagline(true), 700);
     }, 350); // Wait for fade out animation to complete
+  };
+
+  const toggleChaosMode = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // Simply toggle the mode without changing any other state
+    // This prevents any layout shifts or movements
+    setChaosMode(prev => !prev);
   };
 
   // Generate randomized static stars on load (~25% more than before -> 16)
@@ -135,9 +153,84 @@ const CrystalBallLanding = () => {
     };
   }, []);
 
-  // Generate initial phrase on component mount
+  // Generate initial phrase after CSV data is loaded
   useEffect(() => {
-    setCurrentPhrase(generatePhraseFromTemplate());
+    if (CSV_PHRASES.length > 0) {
+      setCurrentPhrase(generatePhrase());
+    }
+  }, [CSV_PHRASES, generatePhrase]);
+
+  function generatePhraseFromCSV() {
+    const randomPhrase = CSV_PHRASES[Math.floor(Math.random() * CSV_PHRASES.length)];
+    let phrase = randomPhrase.charAt(0).toUpperCase() + randomPhrase.slice(1);
+    if (!phrase.endsWith('.')) {
+      phrase += '.';
+    }
+    return phrase;
+  }
+
+  function parseCsvToPhrases(text) {
+    if (!text) return [];
+    return text
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0 && !line.startsWith('#'))
+      .map((line) => {
+        // Very small CSV heuristic: use first column; support simple quoted value
+        if (line.startsWith('"')) {
+          const m = line.match(/^"((?:[^"\\]|\\.)*)"/);
+          if (m) {
+            let s = m[1].replace(/\\"/g, '"').trim();
+            return s;
+          }
+        }
+        const first = line.split(',')[0];
+        let s = first.replace(/^"|"$/g, '').trim();
+        return s;
+      })
+      .filter(Boolean);
+  }  
+
+  // Load phrases from CSV files in src/phrases at build-time (fetched at runtime)
+  useEffect(() => {
+    let isCancelled = false;
+    async function loadFromCsv() {
+      let urls = [];
+      try {
+        const context = require.context('../phrases', false, /\.csv$/);
+        urls = context.keys().map(context);
+      } catch (err) {
+        // No phrases directory or none matched; keep fallback
+      }
+
+      if (urls.length === 0) return; // keep defaults
+
+      try {
+        const texts = await Promise.all(
+          urls.map(async (u) => {
+            try {
+              const res = await fetch(u);
+              if (!res.ok) return '';
+              return await res.text();
+            } catch (_) {
+              return '';
+            }
+          })
+        );
+        const parsed = texts.flatMap((t) => parseCsvToPhrases(t));
+        const unique = Array.from(new Set(parsed.map((s) => s.trim()))).filter(Boolean);
+        if (!isCancelled && unique.length > 0) {
+          setCSV_PHRASES(unique);
+        }
+      } catch (_) {
+        // ignore and keep fallback
+      }
+    }
+
+    loadFromCsv();
+    return () => {
+      isCancelled = true;
+    };
   }, []);
 
   // Shooting stars spawner: every 1–5s, sometimes two at once
@@ -303,6 +396,15 @@ const CrystalBallLanding = () => {
       <div className="cb-mystical-title">
         What does the oracle have in store for you?
       </div>
+
+      {/* Chaos Mode Button */}
+      <button 
+        className={`chaos-mode-btn ${chaosMode ? 'active' : ''}`}
+        onClick={toggleChaosMode}
+        aria-label={`Chaos Mode ${chaosMode ? 'enabled' : 'disabled'}`}
+      >
+        {chaosMode ? '🌪️ Chaos Mode ON' : '✨ Normal Mode'}
+      </button>
 
       <section className="cb-scene" aria-label="Crystal ball">
         <img
