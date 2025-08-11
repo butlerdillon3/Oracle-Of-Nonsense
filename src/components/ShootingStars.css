@@ -1,0 +1,25 @@
+.cb-shooting-stars { 
+  position: fixed; 
+  inset: 0; 
+  z-index: 0; 
+  pointer-events: none; 
+  overflow: hidden; 
+}
+
+.shooting-star {
+  position: absolute;
+  transform: translate(0, 0) rotate(var(--rot, 0deg));
+  animation: fly var(--dur, 1200ms) linear forwards;
+  image-rendering: pixelated;
+  width: 8px;
+  height: 2px;
+  background: hsl(var(--hue, 200), 100%, 80%);
+  box-shadow: 0 0 8px hsla(var(--hue, 200), 100%, 70%, .9), 2px 2px 0 #000;
+}
+
+@keyframes fly {
+  to {
+    transform: translate(var(--dx, 600px), var(--dy, 0px)) rotate(var(--rot, 0deg));
+    opacity: 0;
+  }
+}

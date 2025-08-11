@@ -1,0 +1,41 @@
+.chaos-mode-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 10;
+  background: rgba(15, 18, 48, 0.9);
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  padding: 12px 16px;
+  font-family: var(--font);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transform: translateZ(0);
+  will-change: transform;
+  pointer-events: auto;
+  contain: layout style paint;
+  isolation: isolate;
+}
+
+.chaos-mode-btn:hover {
+  background: rgba(231, 241, 255, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.chaos-mode-btn.active {
+  background: rgba(255, 100, 100, 0.2);
+  border-color: #ff6464;
+  color: #ff6464;
+  box-shadow: 0 0 20px rgba(255, 100, 100, 0.3);
+}
+
+.chaos-mode-btn.active:hover {
+  background: rgba(255, 100, 100, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(255, 100, 100, 0.4);
+}

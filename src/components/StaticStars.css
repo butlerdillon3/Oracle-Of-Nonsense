@@ -1,0 +1,8 @@
+.static-star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #fff;
+  image-rendering: pixelated;
+  animation: cb-twinkle 6s steps(8) infinite;
+}

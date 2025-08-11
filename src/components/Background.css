@@ -1,0 +1,41 @@
+.cb-bg, .cb-stars, .cb-scan, .cb-static-stars { 
+  position: absolute; 
+  inset: 0; 
+  z-index: 0; 
+  pointer-events: none; 
+}
+
+.cb-bg { 
+  position: fixed; 
+}
+
+.cb-stars { 
+  opacity: .85; 
+  image-rendering: pixelated; 
+  background:
+    linear-gradient(#fff, #fff) 8% 16% / 2px 2px no-repeat,
+    linear-gradient(#fff, #fff) 24% 22% / 2px 2px no-repeat,
+    linear-gradient(#fff, #fff) 40% 10% / 2px 2px no-repeat,
+    linear-gradient(#fff, #fff) 60% 18% / 2px 2px no-repeat,
+    linear-gradient(#fff, #fff) 78% 14% / 2px 2px no-repeat,
+    linear-gradient(#fff, #fff) 72% 34% / 2px 2px no-repeat,
+    linear-gradient(#fff, #fff) 14% 52% / 2px 2px no-repeat,
+    linear-gradient(#fff, #fff) 30% 64% / 2px 2px no-repeat,
+    linear-gradient(#fff, #fff) 52% 72% / 2px 2px no-repeat,
+    linear-gradient(#fff, #fff) 86% 70% / 2px 2px no-repeat,
+    linear-gradient(#fff, #fff) 5% 40% / 2px 2px no-repeat,
+    linear-gradient(#fff, #fff) 92% 38% / 2px 2px no-repeat,
+    linear-gradient(#fff, #fff) 48% 26% / 2px 2px no-repeat;
+  animation: cb-twinkle 6s steps(8) infinite;
+}
+
+.cb-scan { 
+  opacity: .06; 
+  background: repeating-linear-gradient(0deg, rgba(255,255,255,.5) 0 2px, transparent 2px 4px); 
+}
+
+@keyframes cb-twinkle { 
+  50% { 
+    filter: brightness(1.4); 
+  } 
+}
