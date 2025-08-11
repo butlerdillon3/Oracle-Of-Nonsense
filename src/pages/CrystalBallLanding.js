@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import './CrystalBallLanding.css';
 import crystalBallImg from '../pictures/Crystal-Ball-PNG-Cutout.png';
 import PHRASE_TEMPLATES from '../templates/Templates.js';
-
 
 function generatePhraseFromTemplate() {
   const template = PHRASE_TEMPLATES[Math.floor(Math.random() * PHRASE_TEMPLATES.length)];
@@ -38,19 +37,15 @@ function generatePhraseFromTemplate() {
   return phrase.charAt(0).toUpperCase() + phrase.slice(1) + '.';
 }
 
-
-
 const CrystalBallLanding = () => {
   const [CSV_PHRASES, setCSV_PHRASES] = useState(['The oracle is silent today.']);
   const [currentPhrase, setCurrentPhrase] = useState('');
   const [chaosMode, setChaosMode] = useState(false);
-
   const [showPhrase, setShowPhrase] = useState(false);
   const [showTagline, setShowTagline] = useState(false);
   const [attentionShake, setAttentionShake] = useState(false);
   const [isInteracting, setIsInteracting] = useState(false);
   const [isClickable, setIsClickable] = useState(true);
-
   const [stars, setStars] = useState([]); // shooting stars
   const [staticStars, setStaticStars] = useState([]); // randomized background stars
   const [movingPhrases, setMovingPhrases] = useState([]); // moving "Oracle of Nonsense" phrases
@@ -63,26 +58,26 @@ const CrystalBallLanding = () => {
   const phraseScheduleRef = useRef(null);
   const phraseRemovalRefs = useRef(new Map());
 
-  const generatePhrase = React.useCallback(() => {
+  const generatePhrase = useCallback(() => {
     return chaosMode ? generatePhraseFromTemplate() : generatePhraseFromCSV();
   }, [chaosMode, CSV_PHRASES]);
 
-  const handleEnter = () => {
+  const handleEnter = useCallback(() => {
     setIsInteracting(true);
     setCurrentPhrase(generatePhrase());
     setShowPhrase(true);
     clearTimeout(revealTimerRef.current);
     revealTimerRef.current = setTimeout(() => setShowTagline(true), 700);
-  };
+  }, [generatePhrase]);
 
-  const handleLeave = () => {
+  const handleLeave = useCallback(() => {
     setIsInteracting(false);
     clearTimeout(revealTimerRef.current);
     setShowTagline(false);
     setShowPhrase(false);
-  };
+  }, []);
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     if (!isClickable) return; // Prevent rapid clicking
     
     // Start 2-second cooldown
@@ -100,16 +95,16 @@ const CrystalBallLanding = () => {
       clearTimeout(revealTimerRef.current);
       revealTimerRef.current = setTimeout(() => setShowTagline(true), 700);
     }, 350); // Wait for fade out animation to complete
-  };
+  }, [isClickable, generatePhrase]);
 
-  const toggleChaosMode = (e) => {
+  const toggleChaosMode = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
     
     // Simply toggle the mode without changing any other state
     // This prevents any layout shifts or movements
     setChaosMode(prev => !prev);
-  };
+  }, []);
 
   // Generate randomized static stars on load (~25% more than before -> 16)
   useEffect(() => {
