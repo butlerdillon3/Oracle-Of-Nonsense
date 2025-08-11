@@ -42,6 +42,15 @@ function generatePhraseFromTemplate() {
   return phrase.charAt(0).toUpperCase() + phrase.slice(1) + '.';
 }
 
+function generatePhraseFromCSV(csvPhrases) {
+  const randomPhrase = csvPhrases[Math.floor(Math.random() * csvPhrases.length)];
+  let phrase = randomPhrase.charAt(0).toUpperCase() + randomPhrase.slice(1);
+  if (!phrase.endsWith('.')) {
+    phrase += '.';
+  }
+  return phrase;
+}
+
 const CrystalBallLanding = () => {
   const [CSV_PHRASES, setCSV_PHRASES] = useState(['The oracle is silent today.']);
   const [currentPhrase, setCurrentPhrase] = useState('');
@@ -57,7 +66,7 @@ const CrystalBallLanding = () => {
   const scheduleRef = useRef(null);
 
   const generatePhrase = useCallback(() => {
-    return chaosMode ? generatePhraseFromTemplate() : generatePhraseFromCSV();
+    return chaosMode ? generatePhraseFromTemplate() : generatePhraseFromCSV(CSV_PHRASES);
   }, [chaosMode, CSV_PHRASES]);
 
   const handleEnter = useCallback(() => {
@@ -141,14 +150,7 @@ const CrystalBallLanding = () => {
     }
   }, [CSV_PHRASES, generatePhrase]);
 
-  function generatePhraseFromCSV() {
-    const randomPhrase = CSV_PHRASES[Math.floor(Math.random() * CSV_PHRASES.length)];
-    let phrase = randomPhrase.charAt(0).toUpperCase() + randomPhrase.slice(1);
-    if (!phrase.endsWith('.')) {
-      phrase += '.';
-    }
-    return phrase;
-  }
+
 
   function parseCsvToPhrases(text) {
     if (!text) return [];
