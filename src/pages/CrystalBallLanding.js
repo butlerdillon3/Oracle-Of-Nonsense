@@ -1,56 +1,45 @@
-/* global require */
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './CrystalBallLanding.css';
 import crystalBallImg from '../pictures/Crystal-Ball-PNG-Cutout.png';
+import PHRASE_TEMPLATES from '../templates/Templates.js';
 
-function getNextIndex(max, exclude) {
-  if (max <= 1) return 0;
-  let idx = Math.floor(Math.random() * max);
-  if (idx === exclude) idx = (idx + 1) % max;
-  return idx;
-}
+function generatePhraseFromTemplate() {
+  const template = PHRASE_TEMPLATES[Math.floor(Math.random() * PHRASE_TEMPLATES.length)];
+  let phrase = template.structure;
 
-const DEFAULT_FALLBACK_PHRASES = [
-  'the veil thins, truth glimmers',
-  'you already know the answer',
-  'listen for the softest yes',
-  'intention tunes the frequency',
-  'destiny speaks between thoughts',
-  'your timing is a constellation',
-  'the next step arrives on a whisper',
-  'clarity shimmers at the edges',
-  'fortune hums in quiet moments',
-  'exhale—the path appears',
-];
+  // Replace placeholders with random words from their respective arrays
+  if (template.nouns) {
+    phrase = phrase.replace(/\{noun\}/g, () => template.nouns[Math.floor(Math.random() * template.nouns.length)]);
+  }
+  if (template.verbs) {
+    phrase = phrase.replace(/\{verb\}/g, () => template.verbs[Math.floor(Math.random() * template.verbs.length)]);
+  }
+  if (template.nouns2) {
+    phrase = phrase.replace(/\{noun2\}/g, () => template.nouns2[Math.floor(Math.random() * template.nouns2.length)]);
+  }
+  if (template.verbs2) {
+    phrase = phrase.replace(/\{verb2\}/g, () => template.verbs2[Math.floor(Math.random() * template.verbs2.length)]);
+  }
+  if (template.nouns3) {
+    phrase = phrase.replace(/\{noun3\}/g, () => template.nouns3[Math.floor(Math.random() * template.nouns3.length)]);
+  }
+  if (template.nouns4) {
+    phrase = phrase.replace(/\{noun4\}/g, () => template.nouns4[Math.floor(Math.random() * template.nouns4.length)]);
+  }
+  if (template.adjectives) {
+    phrase = phrase.replace(/\{adjective\}/g, () => template.adjectives[Math.floor(Math.random() * template.adjectives.length)]);
+  }
+  if (template.adjectives2) {
+    phrase = phrase.replace(/\{adjective2\}/g, () => template.adjectives2[Math.floor(Math.random() * template.adjectives2.length)]);
+  }
 
-function parseCsvToPhrases(text) {
-  if (!text) return [];
-  return text
-    .split(/\r?\n/)
-    .map((line) => line.trim())
-    .filter((line) => line.length > 0 && !line.startsWith('#'))
-    .map((line) => {
-      // Very small CSV heuristic: use first column; support simple quoted value
-      if (line.startsWith('"')) {
-        const m = line.match(/^"((?:[^"\\]|\\.)*)"/);
-        if (m) {
-          let s = m[1].replace(/\\"/g, '"').trim();
-          if (!s.endsWith('.')) s += '.';
-          return s;
-        }
-      }
-      const first = line.split(',')[0];
-      let s = first.replace(/^"|"$/g, '').trim();
-      if (!s.endsWith('.')) s += '.';
-      return s;
-    })
-    .filter(Boolean);
+  // Capitalize the first letter of the phrase and add a period
+  return phrase.charAt(0).toUpperCase() + phrase.slice(1) + '.';
 }
 
 const CrystalBallLanding = () => {
-  const [allPhrases, setAllPhrases] = useState(DEFAULT_FALLBACK_PHRASES);
+  const [currentPhrase, setCurrentPhrase] = useState('');
 
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [showPhrase, setShowPhrase] = useState(false);
   const [showTagline, setShowTagline] = useState(false);
   const [attentionShake, setAttentionShake] = useState(false);
@@ -71,7 +60,7 @@ const CrystalBallLanding = () => {
 
   const handleEnter = () => {
     setIsInteracting(true);
-    setCurrentIndex((prev) => getNextIndex(allPhrases.length, prev));
+    setCurrentPhrase(generatePhraseFromTemplate());
     setShowPhrase(true);
     clearTimeout(revealTimerRef.current);
     revealTimerRef.current = setTimeout(() => setShowTagline(true), 700);
@@ -97,7 +86,7 @@ const CrystalBallLanding = () => {
     
     // After fade out, show new phrase (same as mouse enter)
     setTimeout(() => {
-      setCurrentIndex((prev) => getNextIndex(allPhrases.length, prev));
+      setCurrentPhrase(generatePhraseFromTemplate());
       setShowPhrase(true);
       clearTimeout(revealTimerRef.current);
       revealTimerRef.current = setTimeout(() => setShowTagline(true), 700);
@@ -146,46 +135,9 @@ const CrystalBallLanding = () => {
     };
   }, []);
 
-  // Load phrases from CSV files in src/phrases at build-time (fetched at runtime)
+  // Generate initial phrase on component mount
   useEffect(() => {
-    let isCancelled = false;
-    async function loadFromCsv() {
-      let urls = [];
-      try {
-        const context = require.context('../phrases', false, /\.csv$/);
-        urls = context.keys().map(context);
-      } catch (err) {
-        // No phrases directory or none matched; keep fallback
-      }
-
-      if (urls.length === 0) return; // keep defaults
-
-      try {
-        const texts = await Promise.all(
-          urls.map(async (u) => {
-            try {
-              const res = await fetch(u);
-              if (!res.ok) return '';
-              return await res.text();
-            } catch (_) {
-              return '';
-            }
-          })
-        );
-        const parsed = texts.flatMap((t) => parseCsvToPhrases(t));
-        const unique = Array.from(new Set(parsed.map((s) => s.trim()))).filter(Boolean);
-        if (!isCancelled && unique.length > 0) {
-          setAllPhrases(unique);
-        }
-      } catch (_) {
-        // ignore and keep fallback
-      }
-    }
-
-    loadFromCsv();
-    return () => {
-      isCancelled = true;
-    };
+    setCurrentPhrase(generatePhraseFromTemplate());
   }, []);
 
   // Shooting stars spawner: every 1–5s, sometimes two at once
@@ -363,7 +315,7 @@ const CrystalBallLanding = () => {
         />
 
         <div className={`cb-phrase ${showPhrase ? 'show' : ''}`} role="status" aria-live="polite">
-          {allPhrases[currentIndex]}
+          {currentPhrase}
         </div>
         <div className={`cb-tagline ${showTagline ? 'show' : ''}`}>and I'm always saying that...</div>
       </section>
