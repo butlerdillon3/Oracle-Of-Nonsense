@@ -6,6 +6,7 @@ import MovingPhrases from '../components/MovingPhrases';
 import MysticalTitle from '../components/MysticalTitle';
 import ChaosModeButton from '../components/ChaosModeButton';
 import CrystalBallScene from '../components/CrystalBallScene';
+import MeteorShower from '../components/MeteorShower';
 import PHRASE_TEMPLATES from '../templates/Templates.js';
 
 function generatePhraseFromTemplate() {
@@ -60,6 +61,7 @@ const CrystalBallLanding = () => {
   const [attentionShake, setAttentionShake] = useState(false);
   const [isInteracting, setIsInteracting] = useState(false);
   const [isClickable, setIsClickable] = useState(true);
+  const [triggerMeteor, setTriggerMeteor] = useState(false);
 
   const revealTimerRef = useRef(null);
   const shakeTimerRef = useRef(null);
@@ -108,9 +110,20 @@ const CrystalBallLanding = () => {
     e.preventDefault();
     e.stopPropagation();
     
-    // Simply toggle the mode without changing any other state
-    // This prevents any layout shifts or movements
-    setChaosMode(prev => !prev);
+    setChaosMode(prev => {
+      const newChaosMode = !prev;
+      
+      // Trigger meteor shower when chaos mode is turned ON
+      if (newChaosMode) {
+        setTriggerMeteor(true);
+      }
+      
+      return newChaosMode;
+    });
+  }, []);
+
+  const handleMeteorComplete = useCallback(() => {
+    setTriggerMeteor(false);
   }, []);
 
   // Periodic attention shake: slower cadence (about 1.8–3.5s)
@@ -223,6 +236,7 @@ const CrystalBallLanding = () => {
       <MovingPhrases />
       <MysticalTitle />
       <ChaosModeButton chaosMode={chaosMode} onToggle={toggleChaosMode} />
+      <MeteorShower trigger={triggerMeteor} onComplete={handleMeteorComplete} />
       <CrystalBallScene
         currentPhrase={currentPhrase}
         showPhrase={showPhrase}
