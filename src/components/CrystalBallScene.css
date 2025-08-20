@@ -1,0 +1,67 @@
+.cb-scene { 
+  position: relative; 
+  z-index: 1; 
+  display: grid; 
+  place-items: center; 
+  gap: 12px; 
+  text-align: center; 
+}
+
+.cb-ball { 
+  width: clamp(160px, 30vw, 260px); 
+  height: auto; 
+  filter: drop-shadow(2px 2px 0 #000) drop-shadow(0 0 18px rgba(255,255,255,.25)); 
+  cursor: pointer; 
+  transition: transform .25s ease; 
+  background-color: transparent; 
+  image-rendering: auto; 
+}
+
+.cb-ball:hover { 
+  transform: translateY(-2px) scale(1.02); 
+}
+
+.shake { 
+  animation: cb-shake .7s steps(12); 
+}
+
+@keyframes cb-shake {
+  0%,100% { transform: translateY(0) rotate(0deg); }
+  20% { transform: translate(-2px, 0) rotate(-2deg); }
+  40% { transform: translate(2px, 0) rotate(2deg); }
+  60% { transform: translate(-2px, 0) rotate(-2deg); }
+  80% { transform: translate(2px, 0) rotate(2deg); }
+}
+
+.cb-phrase { 
+  font-size: clamp(12px, 2.6vw, 18px); 
+  color: var(--ink); 
+  text-shadow: 2px 2px 0 #000; 
+  opacity: 0; 
+  transform: translateY(6px); 
+  transition: opacity .35s steps(8), transform .35s steps(8); 
+  max-width: 720px; 
+  padding: 0 8px; 
+  min-height: 2.5em; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+}
+
+.cb-phrase.show { 
+  opacity: 1; 
+  transform: translateY(0); 
+}
+
+.cb-tagline { 
+  font-size: clamp(10px, 2.2vw, 14px); 
+  color: var(--ink-dim); 
+  opacity: 0; 
+  transform: translateY(8px); 
+  transition: opacity .5s steps(10) .2s, transform .5s steps(10) .2s; 
+}
+
+.cb-tagline.show { 
+  opacity: 1; 
+  transform: translateY(0); 
+}

@@ -1,0 +1,19 @@
+.cb-moving-phrases { 
+  position: fixed; 
+  inset: 0; 
+  z-index: 0; 
+  pointer-events: none; 
+  overflow: hidden; 
+}
+
+.moving-phrase {
+  position: absolute;
+  transform: translate(0, 0) rotate(var(--rot, 0deg));
+  animation: fly var(--dur, 4000ms) linear forwards;
+  image-rendering: pixelated;
+  font-size: clamp(8px, 1.5vw, 12px);
+  color: var(--ink-dim);
+  text-shadow: 2px 2px 0 #000;
+  white-space: nowrap;
+  --dur: 4000ms;
+}
