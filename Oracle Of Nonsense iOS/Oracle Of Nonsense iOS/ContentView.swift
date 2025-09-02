@@ -75,6 +75,9 @@ struct ContentView: View {
         
         isInteracting = true
         
+        // Notify MovingPhrases about touch start
+        NotificationCenter.default.post(name: .crystalBallTouchStart, object: nil)
+        
         // Generate phrase first, then show it
         let newPhrase = phraseGenerator.generatePhrase(chaosMode: chaosMode)
         currentPhrase = newPhrase
@@ -89,6 +92,11 @@ struct ContentView: View {
             if isInteracting {
                 withAnimation(.easeInOut(duration: 0.5).delay(0.2)) {
                     showTagline = true
+                }
+                
+                // Notify MovingPhrases about tagline appearance
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    NotificationCenter.default.post(name: .taglineAppear, object: nil)
                 }
             }
         }

@@ -27,9 +27,11 @@ struct MovingPhrases: View {
         }
         .onAppear {
             startPhraseGeneration()
+            setupHapticObservers()
         }
         .onDisappear {
             timer?.invalidate()
+            NotificationCenter.default.removeObserver(self)
         }
     }
     
@@ -83,6 +85,36 @@ struct MovingPhrases: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + duration + 0.1) {
             phrases.removeAll { $0.id == phrase.id }
         }
+    }
+    
+    private func setupHapticObservers() {
+        NotificationCenter.default.addObserver(
+            forName: .crystalBallTouchStart,
+            object: nil,
+            queue: .main
+        ) { _ in
+            handlePhraseAppear()
+        }
+        
+        NotificationCenter.default.addObserver(
+            forName: .taglineAppear,
+            object: nil,
+            queue: .main
+        ) { _ in
+            handleTaglineAppear()
+        }
+    }
+    
+    private func handlePhraseAppear() {
+        // Single powerful haptic when phrase appears
+        let impactFeedback = UIImpactFeedbackGenerator(style: .heavy)
+        impactFeedback.impactOccurred()
+    }
+    
+    private func handleTaglineAppear() {
+        // Lighter haptic for tagline appearance
+        let impactFeedback = UIImpactFeedbackGenerator(style: .light)
+        impactFeedback.impactOccurred()
     }
 }
 

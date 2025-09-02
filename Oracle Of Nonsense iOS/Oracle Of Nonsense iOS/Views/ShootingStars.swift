@@ -136,6 +136,8 @@ struct ShootingStar {
 
 extension Notification.Name {
     static let chaosModeChanged = Notification.Name("chaosModeChanged")
+    static let crystalBallTouchStart = Notification.Name("crystalBallTouchStart")
+    static let taglineAppear = Notification.Name("taglineAppear")
 }
 
 #Preview {
