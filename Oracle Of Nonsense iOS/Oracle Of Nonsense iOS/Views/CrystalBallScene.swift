@@ -73,34 +73,15 @@ struct CrystalBallScene: View {
     }
     
     private func startShakeAnimation() {
-        // React keyframes: 0%, 20%, 40%, 60%, 80%, 100%
-        // Values: 0deg, -4deg, 4deg, -4deg, 4deg, 0deg
-        // Slower, smoother timing
-        withAnimation(.easeInOut(duration: 0.2)) {
-            shakeRotation = -4.0
-        }
+        let shakeSequence: [(Double, Double)] = [
+            (0.0, -4.0), (0.2, 4.0), (0.4, -4.0), (0.6, 4.0), (0.8, 0.0)
+        ]
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            withAnimation(.easeInOut(duration: 0.2)) {
-                shakeRotation = 4.0
-            }
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-            withAnimation(.easeInOut(duration: 0.2)) {
-                shakeRotation = -4.0
-            }
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-            withAnimation(.easeInOut(duration: 0.2)) {
-                shakeRotation = 4.0
-            }
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-            withAnimation(.easeInOut(duration: 0.2)) {
-                shakeRotation = 0.0
+        for (delay, rotation) in shakeSequence {
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    shakeRotation = rotation
+                }
             }
         }
     }

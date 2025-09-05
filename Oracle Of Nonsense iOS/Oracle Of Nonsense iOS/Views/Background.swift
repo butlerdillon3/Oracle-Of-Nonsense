@@ -65,12 +65,6 @@ struct StaticStars: View {
 
 
 
-struct Star {
-    let id: UUID
-    let position: CGPoint
-    let size: CGFloat
-    let opacity: Double
-}
 
 #Preview {
     Background()

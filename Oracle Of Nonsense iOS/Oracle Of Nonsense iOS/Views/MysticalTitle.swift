@@ -24,7 +24,6 @@ struct MysticalTitle: View {
     }
     
     private func startContinuousWobble() {
-        // Continuous wobble between -3° and +3° with no decay
         withAnimation(.easeInOut(duration: 2.0).repeatForever(autoreverses: true)) {
             wobbleAngle = -3.0
         }

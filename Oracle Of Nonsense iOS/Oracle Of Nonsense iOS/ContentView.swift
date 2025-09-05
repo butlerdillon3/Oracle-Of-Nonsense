@@ -70,31 +70,23 @@ struct ContentView: View {
     }
     
     private func handleTouchStart() {
-        // Prevent interaction if in cooldown
         guard !isInCooldown else { return }
         
         isInteracting = true
-        
-        // Notify MovingPhrases about touch start
         NotificationCenter.default.post(name: .crystalBallTouchStart, object: nil)
         
-        // Generate phrase first, then show it
-        let newPhrase = phraseGenerator.generatePhrase(chaosMode: chaosMode)
-        currentPhrase = newPhrase
+        currentPhrase = phraseGenerator.generatePhrase(chaosMode: chaosMode)
         
-        // Show phrase with animation
         withAnimation(.easeInOut(duration: 0.35)) {
             showPhrase = true
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-            // Only show tagline if user is still holding the crystal ball
             if isInteracting {
                 withAnimation(.easeInOut(duration: 0.5).delay(0.2)) {
                     showTagline = true
                 }
                 
-                // Notify MovingPhrases about tagline appearance
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                     NotificationCenter.default.post(name: .taglineAppear, object: nil)
                 }
@@ -104,15 +96,10 @@ struct ContentView: View {
     
     private func handleTouchEnd() {
         isInteracting = false
-        
-        // Force immediate fade out - no animation to prevent conflicts
         showTagline = false
         showPhrase = false
         
-        // Start cooldown period to prevent rapid interactions
         isInCooldown = true
-        
-        // Cooldown duration should match the fade-out animation time (0.35s) plus a small buffer
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             isInCooldown = false
         }
@@ -120,11 +107,8 @@ struct ContentView: View {
     
     private func toggleChaosMode() {
         chaosMode.toggle()
-        
-        // Notify shooting stars about chaos mode change
         NotificationCenter.default.post(name: .chaosModeChanged, object: chaosMode)
         
-        // Trigger meteor shower when chaos mode is turned ON
         if chaosMode {
             triggerMeteor = true
         }
@@ -135,7 +119,6 @@ struct ContentView: View {
     }
     
     private func startAttentionShake() {
-        // Initial nudge ~1s after mount
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             triggerShake()
         }
@@ -147,7 +130,6 @@ struct ContentView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             attentionShake = false
             
-            // Schedule next shake
             let nextInMs = Double.random(in: 1.0...2.5)
             DispatchQueue.main.asyncAfter(deadline: .now() + nextInMs) {
                 triggerShake()

@@ -6,7 +6,20 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		5B03D9EA2E6A66C700647671 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B03D9E92E6A66C700647671 /* WidgetKit.framework */; };
+		5B03D9EC2E6A66C700647671 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B03D9EB2E6A66C700647671 /* SwiftUI.framework */; };
+		5B03D9FB2E6A66C800647671 /* Oracle WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5B03D9E72E6A66C700647671 /* Oracle WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
+		5B03D9F92E6A66C800647671 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5B1DACC62E6692060035F967 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5B03D9E62E6A66C700647671;
+			remoteInfo = "Oracle WidgetExtension";
+		};
 		5B1DACDC2E6692080035F967 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5B1DACC62E6692060035F967 /* Project object */;
@@ -23,13 +36,37 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		5B03D9FC2E6A66C800647671 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				5B03D9FB2E6A66C800647671 /* Oracle WidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		5B03D9E72E6A66C700647671 /* Oracle WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Oracle WidgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B03D9E92E6A66C700647671 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		5B03D9EB2E6A66C700647671 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		5B1DACCE2E6692060035F967 /* Oracle Of Nonsense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Oracle Of Nonsense.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B1DACDB2E6692080035F967 /* Oracle Of Nonsense iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Oracle Of Nonsense iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B1DACE52E6692080035F967 /* Oracle Of Nonsense iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Oracle Of Nonsense iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		5B03DA002E6A66C800647671 /* Exceptions for "Oracle Widget" folder in "Oracle WidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 5B03D9E62E6A66C700647671 /* Oracle WidgetExtension */;
+		};
 		5B1B6FFE2E67447C0087642D /* Exceptions for "Oracle Of Nonsense iOS" folder in "Oracle Of Nonsense iOS" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -40,6 +77,14 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		5B03D9ED2E6A66C700647671 /* Oracle Widget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				5B03DA002E6A66C800647671 /* Exceptions for "Oracle Widget" folder in "Oracle WidgetExtension" target */,
+			);
+			path = "Oracle Widget";
+			sourceTree = "<group>";
+		};
 		5B1DACD02E6692060035F967 /* Oracle Of Nonsense iOS */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -61,6 +106,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5B03D9E42E6A66C700647671 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B03D9EC2E6A66C700647671 /* SwiftUI.framework in Frameworks */,
+				5B03D9EA2E6A66C700647671 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5B1DACCB2E6692060035F967 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -85,12 +139,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5B03D9E82E6A66C700647671 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5B03D9E92E6A66C700647671 /* WidgetKit.framework */,
+				5B03D9EB2E6A66C700647671 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		5B1DACC52E6692060035F967 = {
 			isa = PBXGroup;
 			children = (
 				5B1DACD02E6692060035F967 /* Oracle Of Nonsense iOS */,
 				5B1DACDE2E6692080035F967 /* Oracle Of Nonsense iOSTests */,
 				5B1DACE82E6692080035F967 /* Oracle Of Nonsense iOSUITests */,
+				5B03D9ED2E6A66C700647671 /* Oracle Widget */,
+				5B03D9E82E6A66C700647671 /* Frameworks */,
 				5B1DACCF2E6692060035F967 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -101,6 +166,7 @@
 				5B1DACCE2E6692060035F967 /* Oracle Of Nonsense.app */,
 				5B1DACDB2E6692080035F967 /* Oracle Of Nonsense iOSTests.xctest */,
 				5B1DACE52E6692080035F967 /* Oracle Of Nonsense iOSUITests.xctest */,
+				5B03D9E72E6A66C700647671 /* Oracle WidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -108,6 +174,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		5B03D9E62E6A66C700647671 /* Oracle WidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5B03D9FF2E6A66C800647671 /* Build configuration list for PBXNativeTarget "Oracle WidgetExtension" */;
+			buildPhases = (
+				5B03D9E32E6A66C700647671 /* Sources */,
+				5B03D9E42E6A66C700647671 /* Frameworks */,
+				5B03D9E52E6A66C700647671 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				5B03D9ED2E6A66C700647671 /* Oracle Widget */,
+			);
+			name = "Oracle WidgetExtension";
+			packageProductDependencies = (
+			);
+			productName = "Oracle WidgetExtension";
+			productReference = 5B03D9E72E6A66C700647671 /* Oracle WidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		5B1DACCD2E6692060035F967 /* Oracle Of Nonsense iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5B1DACEF2E6692080035F967 /* Build configuration list for PBXNativeTarget "Oracle Of Nonsense iOS" */;
@@ -115,10 +203,12 @@
 				5B1DACCA2E6692060035F967 /* Sources */,
 				5B1DACCB2E6692060035F967 /* Frameworks */,
 				5B1DACCC2E6692060035F967 /* Resources */,
+				5B03D9FC2E6A66C800647671 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				5B03D9FA2E6A66C800647671 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				5B1DACD02E6692060035F967 /* Oracle Of Nonsense iOS */,
@@ -186,6 +276,9 @@
 				LastSwiftUpdateCheck = 1640;
 				LastUpgradeCheck = 1640;
 				TargetAttributes = {
+					5B03D9E62E6A66C700647671 = {
+						CreatedOnToolsVersion = 16.4;
+					};
 					5B1DACCD2E6692060035F967 = {
 						CreatedOnToolsVersion = 16.4;
 					};
@@ -216,11 +309,19 @@
 				5B1DACCD2E6692060035F967 /* Oracle Of Nonsense iOS */,
 				5B1DACDA2E6692080035F967 /* Oracle Of Nonsense iOSTests */,
 				5B1DACE42E6692080035F967 /* Oracle Of Nonsense iOSUITests */,
+				5B03D9E62E6A66C700647671 /* Oracle WidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5B03D9E52E6A66C700647671 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5B1DACCC2E6692060035F967 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -245,6 +346,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5B03D9E32E6A66C700647671 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5B1DACCA2E6692060035F967 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -269,6 +377,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		5B03D9FA2E6A66C800647671 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5B03D9E62E6A66C700647671 /* Oracle WidgetExtension */;
+			targetProxy = 5B03D9F92E6A66C800647671 /* PBXContainerItemProxy */;
+		};
 		5B1DACDD2E6692080035F967 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5B1DACCD2E6692060035F967 /* Oracle Of Nonsense iOS */;
@@ -282,6 +395,60 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		5B03D9FD2E6A66C800647671 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 34XRN743ZV;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Oracle Widget/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Oracle Widget";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "dbutler.Oracle-Of-Nonsense-iOS.Oracle-Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5B03D9FE2E6A66C800647671 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 34XRN743ZV;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Oracle Widget/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Oracle Widget";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "dbutler.Oracle-Of-Nonsense-iOS.Oracle-Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		5B1DACED2E6692080035F967 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -532,6 +699,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5B03D9FF2E6A66C800647671 /* Build configuration list for PBXNativeTarget "Oracle WidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5B03D9FD2E6A66C800647671 /* Debug */,
+				5B03D9FE2E6A66C800647671 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		5B1DACC92E6692060035F967 /* Build configuration list for PBXProject "Oracle Of Nonsense iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

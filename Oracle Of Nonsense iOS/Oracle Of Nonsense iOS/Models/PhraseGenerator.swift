@@ -1,5 +1,5 @@
 //
-//  PhraseTemplate.swift
+//  PhraseGenerator.swift
 //  Oracle Of Nonsense iOS
 //
 //  Created by Dillon Butler on 9/1/25.
