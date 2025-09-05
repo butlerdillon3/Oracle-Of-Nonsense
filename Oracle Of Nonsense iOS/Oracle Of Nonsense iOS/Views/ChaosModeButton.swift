@@ -17,7 +17,7 @@ struct ChaosModeButton: View {
                 Text(chaosMode ? "🌪️" : "✨")
                     .font(.title2)
                 
-                Text(chaosMode ? "Chaos Mode ON" : "Normal Mode")
+                Text(chaosMode ? "Chaos Mode" : "Normal Mode")
                     .font(.system(size: 14, weight: .medium, design: .monospaced))
             }
             .foregroundColor(.white)

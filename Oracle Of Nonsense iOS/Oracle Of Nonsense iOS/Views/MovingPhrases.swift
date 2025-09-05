@@ -37,7 +37,6 @@ struct MovingPhrases: View {
     
     private func startPhraseGeneration() {
         timer = Timer.scheduledTimer(withTimeInterval: Double.random(in: 3...5), repeats: true) { _ in
-            // 20% chance to spawn a phrase
             if Double.random(in: 0...1) < 0.2 {
                 spawnPhrase()
             }
@@ -106,26 +105,14 @@ struct MovingPhrases: View {
     }
     
     private func handlePhraseAppear() {
-        // Single powerful haptic when phrase appears
-        let impactFeedback = UIImpactFeedbackGenerator(style: .heavy)
-        impactFeedback.impactOccurred()
+        UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
     }
     
     private func handleTaglineAppear() {
-        // Lighter haptic for tagline appearance
-        let impactFeedback = UIImpactFeedbackGenerator(style: .light)
-        impactFeedback.impactOccurred()
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
     }
 }
 
-struct MovingPhrase {
-    let id: UUID
-    var position: CGPoint
-    let endPosition: CGPoint
-    let duration: Double
-    let rotation: Double
-    var opacity: Double
-}
 
 #Preview {
     ZStack {

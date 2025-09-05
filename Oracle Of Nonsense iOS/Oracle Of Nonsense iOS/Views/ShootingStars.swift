@@ -52,20 +52,12 @@ struct ShootingStars: View {
     }
     
     private func startStarGeneration() {
-        // Don't generate shooting stars when chaos mode is active
-        // The meteor shower will handle the visual effects instead
         guard !chaosMode else { return }
         
-        // Normal shooting stars - every 0.3-1.2 seconds
-        let baseInterval = 0.3
-        let maxInterval = 1.2
-        
-        timer = Timer.scheduledTimer(withTimeInterval: Double.random(in: baseInterval...maxInterval), repeats: true) { _ in
+        timer = Timer.scheduledTimer(withTimeInterval: Double.random(in: 0.3...1.2), repeats: true) { _ in
             spawnStar()
             
-            // Chance for multiple simultaneous stars
-            let multiStarChance = 0.25
-            if Double.random(in: 0...1) < multiStarChance {
+            if Double.random(in: 0...1) < 0.25 {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
                     spawnStar()
                 }
@@ -124,21 +116,6 @@ struct ShootingStars: View {
     }
 }
 
-struct ShootingStar {
-    let id: UUID
-    var position: CGPoint
-    let endPosition: CGPoint
-    let duration: Double
-    let rotation: Double
-    let hue: Double
-    var opacity: Double
-}
-
-extension Notification.Name {
-    static let chaosModeChanged = Notification.Name("chaosModeChanged")
-    static let crystalBallTouchStart = Notification.Name("crystalBallTouchStart")
-    static let taglineAppear = Notification.Name("taglineAppear")
-}
 
 #Preview {
     ZStack {

@@ -99,14 +99,6 @@ struct MeteorShower: View {
     }
 }
 
-struct Meteor {
-    let id: UUID
-    var position: CGPoint
-    let endPosition: CGPoint
-    let duration: Double
-    let rotation: Double
-    var opacity: Double
-}
 
 #Preview {
     ZStack {
