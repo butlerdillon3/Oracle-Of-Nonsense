@@ -7,6 +7,7 @@
 
 import WidgetKit
 import SwiftUI
+import OracleSharedFramework
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> OracleEntry {
@@ -14,7 +15,7 @@ struct Provider: TimelineProvider {
     }
 
     func getSnapshot(in context: Context, completion: @escaping (OracleEntry) -> ()) {
-        let entry = OracleEntry(date: Date(), phrase: WidgetPhraseGenerator.shared.generatePhrase(chaosMode: false))
+        let entry = OracleEntry(date: Date(), phrase: PhraseGenerator.shared.generateWidgetPhrase())
         completion(entry)
     }
 
@@ -25,7 +26,7 @@ struct Provider: TimelineProvider {
         let currentDate = Date()
         for minuteOffset in 0 ..< 96 { // 24 hours worth of entries (24 * 4 = 96 entries)
             let entryDate = Calendar.current.date(byAdding: .minute, value: minuteOffset * 15, to: currentDate)!
-            let entry = OracleEntry(date: entryDate, phrase: WidgetPhraseGenerator.shared.generatePhrase(chaosMode: false))
+            let entry = OracleEntry(date: entryDate, phrase: PhraseGenerator.shared.generateWidgetPhrase())
             entries.append(entry)
         }
 

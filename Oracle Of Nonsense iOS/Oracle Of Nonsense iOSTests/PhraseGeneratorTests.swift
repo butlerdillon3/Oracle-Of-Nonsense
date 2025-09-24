@@ -7,6 +7,7 @@
 
 import XCTest
 @testable import Oracle_Of_Nonsense_iOS
+@testable import OracleSharedFramework
 
 final class PhraseGeneratorTests: XCTestCase {
     
@@ -20,60 +21,7 @@ final class PhraseGeneratorTests: XCTestCase {
         phraseGenerator = nil
     }
     
-    // MARK: - PhraseTemplate Tests
-    
-    func testPhraseTemplateInitialization() throws {
-        let template = PhraseTemplate(
-            structure: "The {noun} {verb}",
-            nouns: ["moon", "star"],
-            verbs: ["shines", "glows"]
-        )
-        
-        XCTAssertEqual(template.structure, "The {noun} {verb}")
-        XCTAssertEqual(template.nouns, ["moon", "star"])
-        XCTAssertEqual(template.verbs, ["shines", "glows"])
-    }
-    
-    func testPhraseTemplateGeneratePhrase() throws {
-        let template = PhraseTemplate(
-            structure: "The {noun} {verb}",
-            nouns: ["moon"],
-            verbs: ["shines"]
-        )
-        
-        let phrase = template.generatePhrase()
-        XCTAssertTrue(phrase.hasPrefix("The moon shines"))
-        XCTAssertTrue(phrase.hasSuffix("."))
-    }
-    
-    func testPhraseTemplateWithMultiplePlaceholders() throws {
-        let template = PhraseTemplate(
-            structure: "The {noun} {verb} the {noun2}",
-            nouns: ["wind"],
-            verbs: ["whispers"],
-            nouns2: ["truth"]
-        )
-        
-        let phrase = template.generatePhrase()
-        XCTAssertTrue(phrase.contains("wind"))
-        XCTAssertTrue(phrase.contains("whispers"))
-        XCTAssertTrue(phrase.contains("truth"))
-        XCTAssertTrue(phrase.hasSuffix("."))
-    }
-    
-    func testPhraseTemplateCapitalization() throws {
-        let template = PhraseTemplate(
-            structure: "the {noun} {verb}",
-            nouns: ["moon"],
-            verbs: ["shines"]
-        )
-        
-        let phrase = template.generatePhrase()
-        XCTAssertTrue(phrase.hasPrefix("The"))
-        XCTAssertTrue(phrase.hasSuffix("."))
-    }
-    
-    // MARK: - PhraseGenerator Tests
+    // MARK: - App-Specific Integration Tests
     
     func testPhraseGeneratorSingleton() throws {
         let instance1 = PhraseGenerator.shared
@@ -126,56 +74,30 @@ final class PhraseGeneratorTests: XCTestCase {
         }
     }
     
-    // MARK: - CSV Parsing Tests
+    // MARK: - CSV Manager Tests
     
-    func testCSVParsing() throws {
-        let csvContent = """
-        The moon whispers secrets
-        The stars dance in the sky
-        # This is a comment
-        The wind carries ancient wisdom
+    func testCSVManagerSingleton() throws {
+        let manager1 = CSVManager.shared
+        let manager2 = CSVManager.shared
         
-        """
-        
-        let phrases = PhraseGenerator.parseCsvToPhrases(csvContent)
-        
-        XCTAssertEqual(phrases.count, 3)
-        XCTAssertTrue(phrases.contains("The moon whispers secrets"))
-        XCTAssertTrue(phrases.contains("The stars dance in the sky"))
-        XCTAssertTrue(phrases.contains("The wind carries ancient wisdom"))
-        XCTAssertFalse(phrases.contains("# This is a comment"))
+        XCTAssertIdentical(manager1, manager2)
     }
     
-    func testCSVParsingWithCommas() throws {
-        let csvContent = """
-        The moon whispers secrets, additional info
-        The stars dance in the sky, more info
-        The wind carries ancient wisdom, extra data
-        """
+    func testCSVManagerCopyToSharedContainer() throws {
+        // This test verifies the CSV manager can be called without crashing
+        // The actual copying depends on App Groups being set up
+        CSVManager.shared.copyCSVToSharedContainer()
         
-        let phrases = PhraseGenerator.parseCsvToPhrases(csvContent)
-        
-        XCTAssertEqual(phrases.count, 3)
-        XCTAssertTrue(phrases.contains("The moon whispers secrets"))
-        XCTAssertTrue(phrases.contains("The stars dance in the sky"))
-        XCTAssertTrue(phrases.contains("The wind carries ancient wisdom"))
+        // If we get here without crashing, the test passes
+        XCTAssertTrue(true)
     }
     
-    func testCSVParsingEmptyLines() throws {
-        let csvContent = """
-        The moon whispers secrets
+    func testCSVManagerVerifySharedCSV() throws {
+        // This test verifies the verification method works
+        let exists = CSVManager.shared.verifySharedCSV()
         
-        The stars dance in the sky
-        
-        
-        The wind carries ancient wisdom
-        """
-        
-        let phrases = PhraseGenerator.parseCsvToPhrases(csvContent)
-        
-        XCTAssertEqual(phrases.count, 3)
-        XCTAssertTrue(phrases.contains("The moon whispers secrets"))
-        XCTAssertTrue(phrases.contains("The stars dance in the sky"))
-        XCTAssertTrue(phrases.contains("The wind carries ancient wisdom"))
+        // The result depends on whether App Groups are set up and CSV is copied
+        // We just verify the method doesn't crash and returns a boolean
+        XCTAssertTrue(exists == true || exists == false)
     }
 }

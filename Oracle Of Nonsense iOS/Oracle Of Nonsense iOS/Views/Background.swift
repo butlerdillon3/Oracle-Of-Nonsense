@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import OracleSharedFramework
 
 struct Background: View {
     var body: some View {

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import OracleSharedFramework
 
 struct MovingPhrases: View {
     @State private var phrases: [MovingPhrase] = []

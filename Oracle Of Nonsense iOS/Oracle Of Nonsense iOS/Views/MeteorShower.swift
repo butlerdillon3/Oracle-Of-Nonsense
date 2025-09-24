@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import OracleSharedFramework
 
 struct MeteorShower: View {
     let trigger: Bool

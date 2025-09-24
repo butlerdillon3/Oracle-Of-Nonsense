@@ -1,72 +1,14 @@
 //
 //  PhraseGenerator.swift
-//  Oracle Of Nonsense iOS
+//  OracleSharedFramework
 //
-//  Created by Dillon Butler on 9/1/25.
+//  Created by Dillon Butler on 9/4/25.
 //
 
 import Foundation
 
-struct PhraseTemplate {
-    let structure: String
-    let nouns: [String]?
-    let verbs: [String]?
-    let nouns2: [String]?
-    let verbs2: [String]?
-    let nouns3: [String]?
-    let nouns4: [String]?
-    let adjectives: [String]?
-    let adjectives2: [String]?
-    
-    init(structure: String, nouns: [String]? = nil, verbs: [String]? = nil, nouns2: [String]? = nil, verbs2: [String]? = nil, nouns3: [String]? = nil, nouns4: [String]? = nil, adjectives: [String]? = nil, adjectives2: [String]? = nil) {
-        self.structure = structure
-        self.nouns = nouns
-        self.verbs = verbs
-        self.nouns2 = nouns2
-        self.verbs2 = verbs2
-        self.nouns3 = nouns3
-        self.nouns4 = nouns4
-        self.adjectives = adjectives
-        self.adjectives2 = adjectives2
-    }
-    
-    func generatePhrase() -> String {
-        var phrase = structure
-        
-        // Replace placeholders with random words from their respective arrays
-        if let nouns = nouns {
-            phrase = phrase.replacingOccurrences(of: "{noun}", with: nouns.randomElement() ?? "")
-        }
-        if let verbs = verbs {
-            phrase = phrase.replacingOccurrences(of: "{verb}", with: verbs.randomElement() ?? "")
-        }
-        if let nouns2 = nouns2 {
-            phrase = phrase.replacingOccurrences(of: "{noun2}", with: nouns2.randomElement() ?? "")
-        }
-        if let verbs2 = verbs2 {
-            phrase = phrase.replacingOccurrences(of: "{verb2}", with: verbs2.randomElement() ?? "")
-        }
-        if let nouns3 = nouns3 {
-            phrase = phrase.replacingOccurrences(of: "{noun3}", with: nouns3.randomElement() ?? "")
-        }
-        if let nouns4 = nouns4 {
-            phrase = phrase.replacingOccurrences(of: "{noun4}", with: nouns4.randomElement() ?? "")
-        }
-        if let adjectives = adjectives {
-            phrase = phrase.replacingOccurrences(of: "{adjective}", with: adjectives.randomElement() ?? "")
-        }
-        if let adjectives2 = adjectives2 {
-            phrase = phrase.replacingOccurrences(of: "{adjective2}", with: adjectives2.randomElement() ?? "")
-        }
-        
-        // Capitalize the first letter and add a period
-        let capitalized = phrase.prefix(1).uppercased() + phrase.dropFirst()
-        return capitalized + "."
-    }
-}
-
-class PhraseGenerator {
-    static let shared = PhraseGenerator()
+public class PhraseGenerator {
+    public static let shared = PhraseGenerator()
     
     private let templates: [PhraseTemplate] = [
         PhraseTemplate(
@@ -101,9 +43,25 @@ class PhraseGenerator {
     ]
     
     private let csvPhrases: [String] = {
+        // Try to get CSV from framework bundle first
+        if let frameworkPath = Bundle(for: PhraseGenerator.self).path(forResource: "master", ofType: "csv"),
+           let content = try? String(contentsOfFile: frameworkPath, encoding: .utf8) {
+            return PhraseGenerator.parseCsvToPhrases(content)
+        }
+        
+        // Try to get CSV from shared container (for App Groups)
+        let appGroupIdentifier = "group.com.oracleofnonsense.shared"
+        if let sharedContainerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupIdentifier) {
+            let csvFileURL = sharedContainerURL.appendingPathComponent("master.csv")
+            if let content = try? String(contentsOf: csvFileURL, encoding: .utf8) {
+                return PhraseGenerator.parseCsvToPhrases(content)
+            }
+        }
+        
+        // Fallback to main bundle
         guard let path = Bundle.main.path(forResource: "master", ofType: "csv"),
               let content = try? String(contentsOfFile: path, encoding: .utf8) else {
-            // Fallback phrases if CSV file is not found
+            // Final fallback phrases if CSV file is not found
             return [
                 "The oracle is silent today.",
                 "Your path winds through starlight.",
@@ -170,11 +128,16 @@ class PhraseGenerator {
     
     private init() {}
     
-    func generatePhrase(chaosMode: Bool) -> String {
+    public func generatePhrase(chaosMode: Bool) -> String {
         if chaosMode {
             return templates.randomElement()?.generatePhrase() ?? "The oracle is silent today."
         } else {
             return csvPhrases.randomElement() ?? "The oracle is silent today."
         }
+    }
+    
+    // Widget-specific method that only uses CSV phrases
+    public func generateWidgetPhrase() -> String {
+        return csvPhrases.randomElement() ?? "The oracle is silent today."
     }
 }

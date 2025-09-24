@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import OracleSharedFramework
 
 struct ShootingStars: View {
     @State private var stars: [ShootingStar] = []

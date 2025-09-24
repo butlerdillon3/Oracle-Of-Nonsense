@@ -8,6 +8,7 @@
 import XCTest
 import SwiftUI
 @testable import Oracle_Of_Nonsense_iOS
+@testable import OracleSharedFramework
 
 final class OracleAppTests: XCTestCase {
     
@@ -37,5 +38,23 @@ final class OracleAppTests: XCTestCase {
         } else {
             XCTFail("Expected WindowGroup<ContentView>")
         }
+    }
+    
+    func testAppInitializesCSVManager() throws {
+        // Test that the app initializes the CSV manager
+        // This verifies that CSVManager.shared is accessible
+        let manager = CSVManager.shared
+        XCTAssertNotNil(manager)
+    }
+    
+    func testAppCanAccessSharedFramework() throws {
+        // Test that the app can access the shared framework
+        let phraseGenerator = PhraseGenerator.shared
+        XCTAssertNotNil(phraseGenerator)
+        
+        // Test that we can generate a phrase
+        let phrase = phraseGenerator.generatePhrase(chaosMode: false)
+        XCTAssertFalse(phrase.isEmpty)
+        XCTAssertTrue(phrase.hasSuffix("."))
     }
 }
