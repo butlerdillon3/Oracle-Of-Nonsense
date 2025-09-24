@@ -31,7 +31,8 @@ public class CSVManager {
         }
         
         // Try to copy from framework bundle first
-        if let frameworkCSVPath = Bundle(for: CSVManager.self).path(forResource: "master", ofType: "csv"),
+        if let frameworkBundle = Bundle(identifier: "com.oracleofnonsense.OracleSharedFramework.OracleSharedFramework"),
+           let frameworkCSVPath = frameworkBundle.path(forResource: "master", ofType: "csv"),
            let csvContent = try? String(contentsOfFile: frameworkCSVPath, encoding: .utf8) {
             do {
                 try csvContent.write(to: csvFileURL, atomically: true, encoding: .utf8)

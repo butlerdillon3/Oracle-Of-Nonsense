@@ -44,7 +44,8 @@ public class PhraseGenerator {
     
     private let csvPhrases: [String] = {
         // Try to get CSV from framework bundle first
-        if let frameworkPath = Bundle(for: PhraseGenerator.self).path(forResource: "master", ofType: "csv"),
+        if let frameworkBundle = Bundle(identifier: "com.oracleofnonsense.OracleSharedFramework.OracleSharedFramework"),
+           let frameworkPath = frameworkBundle.path(forResource: "master", ofType: "csv"),
            let content = try? String(contentsOfFile: frameworkPath, encoding: .utf8) {
             return PhraseGenerator.parseCsvToPhrases(content)
         }

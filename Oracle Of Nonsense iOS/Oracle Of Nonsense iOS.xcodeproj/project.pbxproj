@@ -129,6 +129,17 @@
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		5B4119712E83B16300FBBABE /* Exceptions for "OracleSharedFramework" folder in "Compile Sources" phase from "OracleSharedFramework" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 5B4119212E83A4C500FBBABE /* Sources */;
+			membershipExceptions = (
+				Assets.xcassets,
+				master.csv,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		5B03D9ED2E6A66C700647671 /* Oracle Widget */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -160,6 +171,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				5B41194F2E83A57F00FBBABE /* Exceptions for "OracleSharedFramework" folder in "OracleSharedFramework" target */,
+				5B4119712E83B16300FBBABE /* Exceptions for "OracleSharedFramework" folder in "Compile Sources" phase from "OracleSharedFramework" target */,
 			);
 			path = OracleSharedFramework;
 			sourceTree = "<group>";

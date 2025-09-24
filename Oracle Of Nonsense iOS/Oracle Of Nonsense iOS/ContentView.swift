@@ -61,7 +61,6 @@ struct ContentView: View {
             MeteorShower(trigger: triggerMeteor, onComplete: handleMeteorComplete)
         }
         .onAppear {
-            copyCsvToSharedContainer()
             setupInitialPhrase()
             startAttentionShake()
         }
@@ -139,34 +138,6 @@ struct ContentView: View {
         }
     }
     
-    private func copyCsvToSharedContainer() {
-        let appGroupIdentifier = "group.com.oracleofnonsense.shared"
-        guard let sharedContainerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupIdentifier) else {
-            print("Failed to get shared container URL")
-            return
-        }
-        
-        guard let bundlePath = Bundle.main.path(forResource: "master", ofType: "csv") else {
-            print("CSV file not found in main bundle")
-            return
-        }
-        
-        let sourceURL = URL(fileURLWithPath: bundlePath)
-        let destinationURL = sharedContainerURL.appendingPathComponent("master.csv")
-        
-        do {
-            // Remove existing file if it exists
-            if FileManager.default.fileExists(atPath: destinationURL.path) {
-                try FileManager.default.removeItem(at: destinationURL)
-            }
-            
-            // Copy the file
-            try FileManager.default.copyItem(at: sourceURL, to: destinationURL)
-            print("Successfully copied CSV to shared container")
-        } catch {
-            print("Failed to copy CSV to shared container: \(error)")
-        }
-    }
 }
 
 #Preview {

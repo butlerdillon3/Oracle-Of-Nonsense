@@ -84,7 +84,7 @@ struct Oracle_WidgetEntryView : View {
                 switch family {
                 case .systemSmall:
                     VStack(spacing: 6) {
-                        Image("crystal-ball")
+                        Image("crystal-ball", bundle: Bundle(identifier: "com.oracleofnonsense.OracleSharedFramework.OracleSharedFramework"))
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 56, height: 56)
@@ -107,7 +107,7 @@ struct Oracle_WidgetEntryView : View {
                 case .systemLarge:
                     HStack(spacing: 12) {
                         // Crystal Ball on the left (larger)
-                        Image("crystal-ball")
+                        Image("crystal-ball", bundle: Bundle(identifier: "com.oracleofnonsense.OracleSharedFramework.OracleSharedFramework"))
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 120, height: 120)
@@ -141,7 +141,7 @@ struct Oracle_WidgetEntryView : View {
                 default:
                     HStack(spacing: 8) {
                         // Crystal Ball on the left
-                        Image("crystal-ball")
+                        Image("crystal-ball", bundle: Bundle(identifier: "com.oracleofnonsense.OracleSharedFramework.OracleSharedFramework"))
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 80, height: 80)

@@ -10,11 +10,6 @@ import OracleSharedFramework
 
 @main
 struct Oracle_Of_Nonsense_iOSApp: App {
-    init() {
-        // Copy CSV file to shared container for widget access
-        CSVManager.shared.copyCSVToSharedContainer()
-    }
-    
     var body: some Scene {
         WindowGroup {
             ContentView()

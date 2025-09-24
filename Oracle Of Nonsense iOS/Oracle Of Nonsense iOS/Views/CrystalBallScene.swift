@@ -23,7 +23,7 @@ struct CrystalBallScene: View {
     var body: some View {
         VStack(spacing: 2) {
             // Crystal Ball
-            Image("crystal-ball")
+            Image("crystal-ball", bundle: Bundle(identifier: "com.oracleofnonsense.OracleSharedFramework.OracleSharedFramework"))
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: min(330, UIScreen.main.bounds.width * 0.37))
