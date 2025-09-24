@@ -42,6 +42,7 @@ struct OracleEntry: TimelineEntry {
 struct Oracle_WidgetEntryView : View {
     var entry: Provider.Entry
     @State private var stars: [WidgetStar] = []
+    @Environment(\.widgetFamily) var family
 
     var body: some View {
         ZStack {
@@ -77,39 +78,100 @@ struct Oracle_WidgetEntryView : View {
                     }
             }
             
-            // Main content - centered
-            HStack(spacing: 8) {
-                // Crystal Ball on the left
-                Image("crystal-ball")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 80, height: 80)
-                    .shadow(color: .white.opacity(0.25), radius: 10, x: 0, y: 0)
-                    .shadow(color: .black, radius: 0, x: 1, y: 1)
-                    .background(Color.clear) // Ensure crystal ball doesn't block stars
-                
-                // Phrase content on the right
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(entry.phrase)
-                        .font(.system(size: 15, weight: .regular, design: .monospaced))
-                        .foregroundColor(Color(red: 0.91, green: 0.95, blue: 1.0))
-                        .multilineTextAlignment(.leading)
-                        .lineLimit(3)
-                        .shadow(color: .black, radius: 0, x: 1, y: 1)
-                        .background(Color.clear) // Ensure text doesn't block stars
-                    
-                    Text("and I'm always saying that...")
-                        .font(.system(size: 11, weight: .regular, design: .monospaced))
-                        .foregroundColor(Color(red: 0.62, green: 0.68, blue: 0.82))
-                        .shadow(color: .black, radius: 0, x: 1, y: 1)
-                        .background(Color.clear) // Ensure text doesn't block stars
+            // Main content varies by widget family
+            Group {
+                switch family {
+                case .systemSmall:
+                    VStack(spacing: 6) {
+                        Image("crystal-ball")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 56, height: 56)
+                            .shadow(color: .white.opacity(0.25), radius: 8, x: 0, y: 0)
+                            .shadow(color: .black, radius: 0, x: 1, y: 1)
+                            .background(Color.clear)
+
+                        Text(entry.phrase)
+                            .font(.system(size: 11, weight: .regular, design: .monospaced))
+                            .foregroundColor(Color(red: 0.91, green: 0.95, blue: 1.0))
+                            .multilineTextAlignment(.center)
+                            .lineLimit(2)
+                            .shadow(color: .black, radius: 0, x: 1, y: 1)
+                            .background(Color.clear)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(8)
+                    .background(Color.clear)
+
+                case .systemLarge:
+                    HStack(spacing: 12) {
+                        // Crystal Ball on the left (larger)
+                        Image("crystal-ball")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 120, height: 120)
+                            .shadow(color: .white.opacity(0.25), radius: 12, x: 0, y: 0)
+                            .shadow(color: .black, radius: 0, x: 1, y: 1)
+                            .background(Color.clear)
+
+                        // Phrase content on the right (more space and lines)
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text(entry.phrase)
+                                .font(.system(size: 19, weight: .regular, design: .monospaced))
+                                .foregroundColor(Color(red: 0.91, green: 0.95, blue: 1.0))
+                                .multilineTextAlignment(.leading)
+                                .lineLimit(6)
+                                .shadow(color: .black, radius: 0, x: 1, y: 1)
+                                .background(Color.clear)
+
+                            Text("and I'm always saying that...")
+                                .font(.system(size: 12, weight: .regular, design: .monospaced))
+                                .foregroundColor(Color(red: 0.62, green: 0.68, blue: 0.82))
+                                .shadow(color: .black, radius: 0, x: 1, y: 1)
+                                .background(Color.clear)
+                        }
+                        .background(Color.clear)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 14)
+                    .background(Color.clear)
+
+                default:
+                    HStack(spacing: 8) {
+                        // Crystal Ball on the left
+                        Image("crystal-ball")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 80, height: 80)
+                            .shadow(color: .white.opacity(0.25), radius: 10, x: 0, y: 0)
+                            .shadow(color: .black, radius: 0, x: 1, y: 1)
+                            .background(Color.clear)
+
+                        // Phrase content on the right
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(entry.phrase)
+                                .font(.system(size: 15, weight: .regular, design: .monospaced))
+                                .foregroundColor(Color(red: 0.91, green: 0.95, blue: 1.0))
+                                .multilineTextAlignment(.leading)
+                                .lineLimit(3)
+                                .shadow(color: .black, radius: 0, x: 1, y: 1)
+                                .background(Color.clear)
+
+                            Text("and I'm always saying that...")
+                                .font(.system(size: 11, weight: .regular, design: .monospaced))
+                                .foregroundColor(Color(red: 0.62, green: 0.68, blue: 0.82))
+                                .shadow(color: .black, radius: 0, x: 1, y: 1)
+                                .background(Color.clear)
+                        }
+                        .background(Color.clear)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 8)
+                    .background(Color.clear)
                 }
-                .background(Color.clear) // Ensure VStack doesn't block stars
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 8)
-            .background(Color.clear) // Ensure HStack doesn't block stars
         }
     }
     
@@ -148,8 +210,15 @@ struct Oracle_Widget: Widget {
         }
         .configurationDisplayName("Oracle of Nonsense")
         .description("Get mystical wisdom from the oracle.")
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
         .contentMarginsDisabled()
     }
+}
+
+#Preview(as: .systemSmall) {
+    Oracle_Widget()
+} timeline: {
+    OracleEntry(date: .now, phrase: "Stars hum while the kettle boils.")
 }
 
 #Preview(as: .systemMedium) {
@@ -157,4 +226,10 @@ struct Oracle_Widget: Widget {
 } timeline: {
     OracleEntry(date: .now, phrase: "The moon forgot its shoes last night.")
     OracleEntry(date: .now, phrase: "A whisper can be heavier than a stone.")
+}
+
+#Preview(as: .systemLarge) {
+    Oracle_Widget()
+} timeline: {
+    OracleEntry(date: .now, phrase: "Candles argue with the wind in polite whispers.")
 }
