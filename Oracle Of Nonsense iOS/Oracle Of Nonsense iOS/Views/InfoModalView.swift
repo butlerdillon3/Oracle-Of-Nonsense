@@ -9,16 +9,16 @@ import SwiftUI
 
 struct InfoModalView: View {
     @Binding var isPresented: Bool
+    @State private var isVisible = false
     
     var body: some View {
         ZStack {
             // Background overlay
-            Color.black.opacity(0.3)
+            Color.black.opacity(isVisible ? 0.3 : 0.0)
                 .ignoresSafeArea()
+                .animation(.easeInOut(duration: 0.3), value: isVisible)
                 .onTapGesture {
-                    withAnimation(.easeInOut(duration: 0.3)) {
-                        isPresented = false
-                    }
+                    dismissModal()
                 }
             
             // Modal content
@@ -33,9 +33,7 @@ struct InfoModalView: View {
                     Spacer()
                     
                     Button(action: {
-                        withAnimation(.easeInOut(duration: 0.3)) {
-                            isPresented = false
-                        }
+                        dismissModal()
                     }) {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title2)
@@ -136,10 +134,30 @@ struct InfoModalView: View {
                     )
             )
             .padding(.horizontal, 32)
-            .scaleEffect(isPresented ? 1.0 : 0.8)
-            .opacity(isPresented ? 1.0 : 0.0)
+            .scaleEffect(isVisible ? 1.0 : 0.8)
+            .opacity(isVisible ? 1.0 : 0.0)
         }
-        .animation(.easeInOut(duration: 0.3), value: isPresented)
+        .animation(.easeInOut(duration: 0.3), value: isVisible)
+        .onAppear {
+            withAnimation(.easeInOut(duration: 0.3)) {
+                isVisible = true
+            }
+        }
+        .onChange(of: isPresented) { newValue in
+            if !newValue {
+                dismissModal()
+            }
+        }
+    }
+    
+    private func dismissModal() {
+        withAnimation(.easeInOut(duration: 0.3)) {
+            isVisible = false
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            isPresented = false
+        }
     }
 }
 
