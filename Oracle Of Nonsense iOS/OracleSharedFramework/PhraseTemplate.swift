@@ -18,7 +18,29 @@ public struct PhraseTemplate {
     public let adjectives: [String]?
     public let adjectives2: [String]?
     
-    public init(structure: String, nouns: [String]? = nil, verbs: [String]? = nil, nouns2: [String]? = nil, verbs2: [String]? = nil, nouns3: [String]? = nil, nouns4: [String]? = nil, adjectives: [String]? = nil, adjectives2: [String]? = nil) {
+    // New parameters for expanded templates
+    public let time: [String]?
+    public let adjective: [String]?
+    public let noun: [String]?
+    public let verb: [String]?
+    public let preposition: [String]?
+    public let something: [String]?
+    
+    public init(structure: String, 
+                nouns: [String]? = nil, 
+                verbs: [String]? = nil, 
+                nouns2: [String]? = nil, 
+                verbs2: [String]? = nil, 
+                nouns3: [String]? = nil, 
+                nouns4: [String]? = nil, 
+                adjectives: [String]? = nil, 
+                adjectives2: [String]? = nil,
+                time: [String]? = nil,
+                adjective: [String]? = nil,
+                noun: [String]? = nil,
+                verb: [String]? = nil,
+                preposition: [String]? = nil,
+                something: [String]? = nil) {
         self.structure = structure
         self.nouns = nouns
         self.verbs = verbs
@@ -28,6 +50,12 @@ public struct PhraseTemplate {
         self.nouns4 = nouns4
         self.adjectives = adjectives
         self.adjectives2 = adjectives2
+        self.time = time
+        self.adjective = adjective
+        self.noun = noun
+        self.verb = verb
+        self.preposition = preposition
+        self.something = something
     }
     
     public func generatePhrase() -> String {
@@ -57,6 +85,26 @@ public struct PhraseTemplate {
         }
         if let adjectives2 = adjectives2 {
             phrase = phrase.replacingOccurrences(of: "{adjective2}", with: adjectives2.randomElement() ?? "")
+        }
+        
+        // Handle new placeholder types
+        if let time = time {
+            phrase = phrase.replacingOccurrences(of: "{time}", with: time.randomElement() ?? "")
+        }
+        if let adjective = adjective {
+            phrase = phrase.replacingOccurrences(of: "{adjective}", with: adjective.randomElement() ?? "")
+        }
+        if let noun = noun {
+            phrase = phrase.replacingOccurrences(of: "{noun}", with: noun.randomElement() ?? "")
+        }
+        if let verb = verb {
+            phrase = phrase.replacingOccurrences(of: "{verb}", with: verb.randomElement() ?? "")
+        }
+        if let preposition = preposition {
+            phrase = phrase.replacingOccurrences(of: "{preposition}", with: preposition.randomElement() ?? "")
+        }
+        if let something = something {
+            phrase = phrase.replacingOccurrences(of: "{something}", with: something.randomElement() ?? "")
         }
         
         // Capitalize the first letter and add a period

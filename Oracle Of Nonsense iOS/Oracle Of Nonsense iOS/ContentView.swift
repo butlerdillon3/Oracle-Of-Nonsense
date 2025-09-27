@@ -17,6 +17,7 @@ struct ContentView: View {
     @State private var isInteracting = false
     @State private var triggerMeteor = false
     @State private var isInCooldown = false
+    @State private var showInfoModal = false
     
     private let phraseGenerator = PhraseGenerator.shared
     
@@ -30,6 +31,32 @@ struct ContentView: View {
             
             // Moving Phrases
             MovingPhrases()
+            
+            // Info Button - positioned concentrically with bottom right corner radius
+            GeometryReader { geometry in
+                let cornerRadius: CGFloat = 47 // iPhone corner radius approximation
+                
+                Button(action: {
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        showInfoModal = true
+                    }
+                }) {
+                    Image(systemName: "info.circle")
+                        .font(.title2)
+                        .foregroundColor(.white.opacity(0.8))
+                        .background(
+                            Circle()
+                                .fill(Color.black.opacity(0.3))
+                                .frame(width: 32, height: 32)
+                        )
+                }
+                .buttonStyle(PlainButtonStyle())
+                .frame(width: 32, height: 32)
+                .position(
+                    x: geometry.size.width - 40,
+                    y: geometry.size.height - 10
+                )
+            }
             
             // Main Content
             VStack(spacing: 20) {
@@ -59,6 +86,11 @@ struct ContentView: View {
             
             // Meteor Shower
             MeteorShower(trigger: triggerMeteor, onComplete: handleMeteorComplete)
+            
+            // Info Modal
+            if showInfoModal {
+                InfoModalView(isPresented: $showInfoModal)
+            }
         }
         .onAppear {
             setupInitialPhrase()
