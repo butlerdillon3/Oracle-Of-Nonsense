@@ -74,6 +74,28 @@ final class PhraseGeneratorTests: XCTestCase {
         }
     }
     
+    func testNoPlaceholdersInGeneratedPhrases() throws {
+        // Generate many phrases to ensure no placeholders remain
+        let phrases = (0..<50).map { _ in
+            phraseGenerator.generatePhrase(chaosMode: true)
+        }
+        
+        // Check that no placeholders remain in any phrase
+        for phrase in phrases {
+            XCTAssertFalse(phrase.contains("{noun}"), "Found {noun} placeholder in phrase: \(phrase)")
+            XCTAssertFalse(phrase.contains("{noun2}"), "Found {noun2} placeholder in phrase: \(phrase)")
+            XCTAssertFalse(phrase.contains("{noun3}"), "Found {noun3} placeholder in phrase: \(phrase)")
+            XCTAssertFalse(phrase.contains("{noun4}"), "Found {noun4} placeholder in phrase: \(phrase)")
+            XCTAssertFalse(phrase.contains("{verb}"), "Found {verb} placeholder in phrase: \(phrase)")
+            XCTAssertFalse(phrase.contains("{verb2}"), "Found {verb2} placeholder in phrase: \(phrase)")
+            XCTAssertFalse(phrase.contains("{adjective}"), "Found {adjective} placeholder in phrase: \(phrase)")
+            XCTAssertFalse(phrase.contains("{adjective2}"), "Found {adjective2} placeholder in phrase: \(phrase)")
+            XCTAssertFalse(phrase.contains("{time}"), "Found {time} placeholder in phrase: \(phrase)")
+            XCTAssertFalse(phrase.contains("{preposition}"), "Found {preposition} placeholder in phrase: \(phrase)")
+            XCTAssertFalse(phrase.contains("{something}"), "Found {something} placeholder in phrase: \(phrase)")
+        }
+    }
+    
     // MARK: - CSV Manager Tests
     
     func testCSVManagerSingleton() throws {

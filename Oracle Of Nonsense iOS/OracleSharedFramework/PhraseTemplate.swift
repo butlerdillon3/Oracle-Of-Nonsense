@@ -62,17 +62,31 @@ public struct PhraseTemplate {
         var phrase = structure
         
         // Replace placeholders with random words from their respective arrays
+        // Handle all placeholder types systematically
+        
+        // Time placeholders
+        if let time = time {
+            phrase = phrase.replacingOccurrences(of: "{time}", with: time.randomElement() ?? "")
+        }
+        
+        // Adjective placeholders (handle both old and new style)
+        if let adjectives = adjectives {
+            phrase = phrase.replacingOccurrences(of: "{adjective}", with: adjectives.randomElement() ?? "")
+        }
+        if let adjectives2 = adjectives2 {
+            phrase = phrase.replacingOccurrences(of: "{adjective2}", with: adjectives2.randomElement() ?? "")
+        }
+        // Handle new-style adjective parameter
+        if let adjective = adjective {
+            phrase = phrase.replacingOccurrences(of: "{adjective}", with: adjective.randomElement() ?? "")
+        }
+        
+        // Noun placeholders (handle all variants)
         if let nouns = nouns {
             phrase = phrase.replacingOccurrences(of: "{noun}", with: nouns.randomElement() ?? "")
         }
-        if let verbs = verbs {
-            phrase = phrase.replacingOccurrences(of: "{verb}", with: verbs.randomElement() ?? "")
-        }
         if let nouns2 = nouns2 {
             phrase = phrase.replacingOccurrences(of: "{noun2}", with: nouns2.randomElement() ?? "")
-        }
-        if let verbs2 = verbs2 {
-            phrase = phrase.replacingOccurrences(of: "{verb2}", with: verbs2.randomElement() ?? "")
         }
         if let nouns3 = nouns3 {
             phrase = phrase.replacingOccurrences(of: "{noun3}", with: nouns3.randomElement() ?? "")
@@ -80,26 +94,24 @@ public struct PhraseTemplate {
         if let nouns4 = nouns4 {
             phrase = phrase.replacingOccurrences(of: "{noun4}", with: nouns4.randomElement() ?? "")
         }
-        if let adjectives = adjectives {
-            phrase = phrase.replacingOccurrences(of: "{adjective}", with: adjectives.randomElement() ?? "")
-        }
-        if let adjectives2 = adjectives2 {
-            phrase = phrase.replacingOccurrences(of: "{adjective2}", with: adjectives2.randomElement() ?? "")
-        }
-        
-        // Handle new placeholder types
-        if let time = time {
-            phrase = phrase.replacingOccurrences(of: "{time}", with: time.randomElement() ?? "")
-        }
-        if let adjective = adjective {
-            phrase = phrase.replacingOccurrences(of: "{adjective}", with: adjective.randomElement() ?? "")
-        }
+        // Handle new-style noun parameter
         if let noun = noun {
             phrase = phrase.replacingOccurrences(of: "{noun}", with: noun.randomElement() ?? "")
         }
+        
+        // Verb placeholders (handle all variants)
+        if let verbs = verbs {
+            phrase = phrase.replacingOccurrences(of: "{verb}", with: verbs.randomElement() ?? "")
+        }
+        if let verbs2 = verbs2 {
+            phrase = phrase.replacingOccurrences(of: "{verb2}", with: verbs2.randomElement() ?? "")
+        }
+        // Handle new-style verb parameter
         if let verb = verb {
             phrase = phrase.replacingOccurrences(of: "{verb}", with: verb.randomElement() ?? "")
         }
+        
+        // Other placeholder types
         if let preposition = preposition {
             phrase = phrase.replacingOccurrences(of: "{preposition}", with: preposition.randomElement() ?? "")
         }
