@@ -59,8 +59,31 @@ struct InfoModalView: View {
                             .lineLimit(nil)
                         
                         Text("Try chaos mode for more wacky and random phrases.")
+                            .font(.body)
+                            .foregroundColor(.white)
+                        
+                        Text("Inspiration")
                             .font(.headline)
                             .foregroundColor(.white)
+                        
+                        Text("This project was inspired by the Library of Babel, a conceptual infinite library containing every possible combination of text.")
+                            .font(.body)
+                            .foregroundColor(.white.opacity(0.9))
+                            .lineLimit(nil)
+                        
+                        Link("Visit the Library of Babel", destination: URL(string: "https://libraryofbabel.info/")!)
+                            .font(.body)
+                            .foregroundColor(.blue)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 12)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(Color.white.opacity(0.1))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .stroke(Color.blue.opacity(0.3), lineWidth: 1)
+                                    )
+                            )
                         
                         Text("This app is open source and available on GitHub.")
                             .font(.headline)
@@ -81,7 +104,7 @@ struct InfoModalView: View {
                             )
                         
                         Text("If you want to support me, you can buy me a coffee!")
-                            .font(.body)
+                            .font(.headline)
                             .foregroundColor(.white.opacity(0.9))
                             .lineLimit(nil)
                         

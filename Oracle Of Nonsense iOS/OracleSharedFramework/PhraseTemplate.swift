@@ -70,45 +70,47 @@ public struct PhraseTemplate {
         }
         
         // Adjective placeholders (handle both old and new style)
-        if let adjectives = adjectives {
+        // New-style takes precedence over old-style
+        if let adjective = adjective {
+            phrase = phrase.replacingOccurrences(of: "{adjective}", with: adjective.randomElement() ?? "")
+        } else if let adjectives = adjectives {
             phrase = phrase.replacingOccurrences(of: "{adjective}", with: adjectives.randomElement() ?? "")
         }
+        
         if let adjectives2 = adjectives2 {
             phrase = phrase.replacingOccurrences(of: "{adjective2}", with: adjectives2.randomElement() ?? "")
         }
-        // Handle new-style adjective parameter
-        if let adjective = adjective {
-            phrase = phrase.replacingOccurrences(of: "{adjective}", with: adjective.randomElement() ?? "")
-        }
         
         // Noun placeholders (handle all variants)
-        if let nouns = nouns {
-            phrase = phrase.replacingOccurrences(of: "{noun}", with: nouns.randomElement() ?? "")
-        }
-        if let nouns2 = nouns2 {
-            phrase = phrase.replacingOccurrences(of: "{noun2}", with: nouns2.randomElement() ?? "")
-        }
-        if let nouns3 = nouns3 {
-            phrase = phrase.replacingOccurrences(of: "{noun3}", with: nouns3.randomElement() ?? "")
-        }
-        if let nouns4 = nouns4 {
-            phrase = phrase.replacingOccurrences(of: "{noun4}", with: nouns4.randomElement() ?? "")
-        }
-        // Handle new-style noun parameter
+        // New-style takes precedence over old-style
         if let noun = noun {
             phrase = phrase.replacingOccurrences(of: "{noun}", with: noun.randomElement() ?? "")
+        } else if let nouns = nouns {
+            phrase = phrase.replacingOccurrences(of: "{noun}", with: nouns.randomElement() ?? "")
+        }
+        
+        // Always handle numbered noun variants
+        if let nouns2 = nouns2, !nouns2.isEmpty {
+            phrase = phrase.replacingOccurrences(of: "{noun2}", with: nouns2.randomElement() ?? "")
+        }
+        if let nouns3 = nouns3, !nouns3.isEmpty {
+            phrase = phrase.replacingOccurrences(of: "{noun3}", with: nouns3.randomElement() ?? "")
+        }
+        if let nouns4 = nouns4, !nouns4.isEmpty {
+            phrase = phrase.replacingOccurrences(of: "{noun4}", with: nouns4.randomElement() ?? "")
         }
         
         // Verb placeholders (handle all variants)
-        if let verbs = verbs {
-            phrase = phrase.replacingOccurrences(of: "{verb}", with: verbs.randomElement() ?? "")
-        }
-        if let verbs2 = verbs2 {
-            phrase = phrase.replacingOccurrences(of: "{verb2}", with: verbs2.randomElement() ?? "")
-        }
-        // Handle new-style verb parameter
+        // New-style takes precedence over old-style
         if let verb = verb {
             phrase = phrase.replacingOccurrences(of: "{verb}", with: verb.randomElement() ?? "")
+        } else if let verbs = verbs {
+            phrase = phrase.replacingOccurrences(of: "{verb}", with: verbs.randomElement() ?? "")
+        }
+        
+        // Always handle numbered verb variants
+        if let verbs2 = verbs2, !verbs2.isEmpty {
+            phrase = phrase.replacingOccurrences(of: "{verb2}", with: verbs2.randomElement() ?? "")
         }
         
         // Other placeholder types
